@@ -10,6 +10,9 @@ class ToggleButton : Button
         BindableProperty.Create(nameof(IsToggled), typeof(bool), typeof(ToggleButton), false,
             propertyChanged: OnIsToggledChanged);
 
+    public static readonly BindableProperty ToggledColorProperty =
+        BindableProperty.Create(nameof(ToggledColor), typeof(Color), typeof(ToggleButton), Color.FromRgb(0, 0, 0));
+
     public ToggleButton()
     {
         Clicked += (sender, args) => IsToggled ^= true;
@@ -19,6 +22,12 @@ class ToggleButton : Button
     {
         set { SetValue(IsToggledProperty, value); }
         get { return (bool)GetValue(IsToggledProperty); }
+    }
+
+    public Color ToggledColor
+    {
+        set { SetValue(ToggledColorProperty, value); }
+        get { return (Color)GetValue(ToggledColorProperty); }
     }
 
     protected override void OnParentSet()

@@ -8,7 +8,7 @@ public sealed class AlertViewModel : INotifyPropertyChanged
     private TimeTracker? _tracker;
 
     public string TrackerName => _tracker?.Name ?? string.Empty;
-    public string TrackerMessage => $"Elapsed {_tracker?.ElapsedTime:g}";
+    public string TrackerMessage => $"Elapsed:\n{_tracker?.ElapsedTime:g}";
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

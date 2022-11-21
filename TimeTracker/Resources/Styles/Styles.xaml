@@ -459,6 +459,7 @@
         <Setter Property="TextTransform" Value="None" />
         <Setter Property="Margin" Value="2" />
         <Setter Property="Padding" Value="2" />
+        <Setter Property="ToggledColor" Value="{StaticResource Gray200}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -486,7 +487,7 @@
 
                     <VisualState Name="ToggledOn">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="Khaki" />
+                            <Setter Property="BackgroundColor" Value="{Binding ToggledColor, Source={RelativeSource Self}}" />
                             <Setter Property="TextColor" Value="{StaticResource Gray950}" />
                         </VisualState.Setters>
                     </VisualState>

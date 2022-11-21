@@ -24,9 +24,9 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
 
 
@@ -34,6 +34,7 @@
             <local:ToggleButton
                 Margin="0"
                 Text="Work"
+                ToggledColor="DarkSlateBlue"
                 Toggled="ToggleButton_OnToggled"
                 HorizontalOptions="Fill" />
 
@@ -42,14 +43,17 @@
                 Margin="0"
                 Padding="0"
                 Text="Call"
+                ToggledColor="DarkGreen"
                 Toggled="ToggleButton_OnToggled"
                 HorizontalOptions="Fill" />
 
             <local:ToggleButton
+                IsEnabled="False"
                 Grid.Row="0" Grid.Column="2"
                 Margin="0"
                 Padding="0"
                 Text="Custom"
+                ToggledColor="DarkKhaki"
                 Toggled="ToggleButton_OnToggled"
                 HorizontalOptions="Fill" />
 
@@ -58,6 +62,7 @@
                 Margin="0"
                 Padding="0"
                 Text="Sport"
+                ToggledColor="DarkMagenta"
                 Toggled="ToggleButton_OnToggled"
                 HorizontalOptions="Fill" />
 
@@ -66,6 +71,7 @@
                 Margin="0"
                 Padding="0"
                 Text="Game"
+                ToggledColor="DarkOrchid"
                 Toggled="ToggleButton_OnToggled"
                 HorizontalOptions="Fill" />
 
@@ -74,6 +80,7 @@
                 Margin="0"
                 Padding="0"
                 Text="Eat"
+                ToggledColor="DarkViolet"
                 Toggled="ToggleButton_OnToggled"
                 HorizontalOptions="Fill" />
 

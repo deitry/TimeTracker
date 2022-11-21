@@ -18,8 +18,12 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Text="{Binding TrackerName}" />
-            <Label Grid.Row="1" Text="{Binding TrackerMessage}" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="170"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Text="{Binding TrackerName}" HorizontalOptions="Center" />
+            <Label Grid.Row="1" Text="{Binding TrackerMessage}" HorizontalOptions="Center" />
             <Button Grid.Row="2" Text="Ok" Clicked="Button_OnClicked" />
         </Grid>
     </ContentPage.Content>

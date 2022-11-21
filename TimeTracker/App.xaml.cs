@@ -18,12 +18,12 @@ public partial class App : Application
         MainPage = new AppShell();
 
         _syncContext = SynchronizationContext.Current;
-        var hook = new TaskPoolGlobalHook();
+        _hook = new TaskPoolGlobalHook();
 
-        hook.KeyPressed += OnKeyPressed;
-        hook.KeyReleased += OnKeyReleased;
+        _hook.KeyPressed += OnKeyPressed;
+        _hook.KeyReleased += OnKeyReleased;
 
-        Task.Run(() => hook.Run());
+        Task.Run(() => _hook.Run());
     }
 
     private async void OnKeyReleased(object sender, KeyboardHookEventArgs e)
@@ -44,6 +44,7 @@ public partial class App : Application
     private bool CtrlPressed;
     private bool WPressed;
     private readonly SynchronizationContext _syncContext;
+    private readonly TaskPoolGlobalHook _hook;
 
     private async void OnKeyPressed(object sender, KeyboardHookEventArgs e)
     {
@@ -61,13 +62,14 @@ public partial class App : Application
 
         if (WPressed && CtrlPressed && Application.Current != null)
         {
-            foreach (var window in Windows)
+            var window = Windows.FirstOrDefault();
+            if (window?.Page != null && window.Page.IsFocused)
             {
+                _hook.Dispose();
+
                 Application.Current.CloseWindow(window);
+                Application.Current.Quit();
             }
-
-            Application.Current.Quit();
         }
-
     }
 }

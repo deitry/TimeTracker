@@ -4,15 +4,15 @@ using System.Runtime.CompilerServices;
 
 namespace TimeTracker;
 
-public class ViewModel : INotifyPropertyChanged
+public sealed class ViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler PropertyChanged;
 
-    public string TimeLeftString => (TimeSpan.FromMinutes(30) - _stopwatch.Elapsed).ToString("g");
+    public string TimeLeftString => (TimeSpan.FromMinutes(30) - _stopwatch.Elapsed).ToString(@"hh\:mm\:ss");
     // private TimeSpan _timeLeft = TimeSpan.FromMinutes(30);
     private readonly Stopwatch _stopwatch = new Stopwatch();
     private readonly Timer _timer;
-    private const double Period = 0.1;
+    private const double Period = 1;
 
     public ViewModel()
     {
@@ -50,12 +50,12 @@ public class ViewModel : INotifyPropertyChanged
         _timer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(Period));
     }
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+    private bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
     {
         if (EqualityComparer<T>.Default.Equals(field, value)) return false;
         field = value;

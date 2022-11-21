@@ -14,22 +14,73 @@
     <!-- <ScrollView Margin="0" HorizontalOptions="Fill"> -->
         <Grid Margin="0"
               HorizontalOptions="Fill"
-              Padding="0">
+              Padding="0"
+              MinimumWidthRequest="30">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
 
-            <Button
+
+            <!-- TODO: SwitchCell ? -->
+            <local:ToggleButton
                 Margin="0"
-                x:Name="CounterBtn"
-                Text="{Binding TimeLeftString}"
-                SemanticProperties.Hint="Calculate elapsed time"
-                BackgroundColor="DarkSlateGrey"
-                TextColor="Cornsilk"
-                Clicked="OnButtonClicked"
+                Text="Work"
+                Toggled="ToggleButton_OnToggled"
                 HorizontalOptions="Fill" />
 
+            <local:ToggleButton
+                Grid.Row="0" Grid.Column="1"
+                Margin="0"
+                Padding="0"
+                Text="Call"
+                Toggled="ToggleButton_OnToggled"
+                HorizontalOptions="Fill" />
+
+            <local:ToggleButton
+                Grid.Row="0" Grid.Column="2"
+                Margin="0"
+                Padding="0"
+                Text="Custom"
+                Toggled="ToggleButton_OnToggled"
+                HorizontalOptions="Fill" />
+
+            <local:ToggleButton
+                Grid.Row="1" Grid.Column="0"
+                Margin="0"
+                Padding="0"
+                Text="Sport"
+                Toggled="ToggleButton_OnToggled"
+                HorizontalOptions="Fill" />
+
+            <local:ToggleButton
+                Grid.Row="1" Grid.Column="1"
+                Margin="0"
+                Padding="0"
+                Text="Game"
+                Toggled="ToggleButton_OnToggled"
+                HorizontalOptions="Fill" />
+
+            <local:ToggleButton
+                Grid.Row="1" Grid.Column="2"
+                Margin="0"
+                Padding="0"
+                Text="Eat"
+                Toggled="ToggleButton_OnToggled"
+                HorizontalOptions="Fill" />
+
+            <Label
+                Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+                Text="{Binding TimeLeftString}"
+                />
         </Grid>
     <!-- </ScrollView> -->
 

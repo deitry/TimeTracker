@@ -34,12 +34,14 @@ public static class MauiProgram
                     AppWindow appWindow = AppWindow.GetFromWindowId(nativeWindowId);
 
                     window.ExtendsContentIntoTitleBar = false;
-                    appWindow.Resize(new SizeInt32(80, 60));
+                    appWindow.Resize(new SizeInt32(100, 100));
 
                     var p = appWindow.Presenter as OverlappedPresenter;
                     Debug.Assert(p != null, nameof(p) + " != null");
 
-                    p.SetBorderAndTitleBar(false, false);
+                    // p.SetBorderAndTitleBar(false, false);
+                    p.IsMaximizable = false;
+                    p.IsMinimizable = false;
                     p.IsAlwaysOnTop = true;
                 });
             });

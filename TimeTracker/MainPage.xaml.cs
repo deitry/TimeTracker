@@ -1,4 +1,11 @@
-﻿namespace TimeTracker;
+﻿using Microsoft.Maui.Controls;
+#if WINDOWS
+using Windows.Graphics;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
+#endif
+
+namespace TimeTracker;
 
 public partial class MainPage : ContentPage
 {
@@ -14,7 +21,16 @@ public partial class MainPage : ContentPage
 
     private async void ViewModelOnAlert(TimeTracker tracker)
     {
-        await DisplayAlert(tracker.Name, $"Elapsed: {tracker.ElapsedTime}", "Ok");
+        // await DisplayAlert(tracker.Name, $"Elapsed: {tracker.ElapsedTime}", "Ok");
+        var window = new Window()
+        {
+            Page = new AlertPage(tracker),
+        };
+
+        window.MinimumHeight = 300;
+        window.MinimumWidth = 500;
+
+        Application.Current?.OpenWindow(window);
     }
 
     private async void ToggleButton_OnToggled(object sender, ToggledEventArgs e)

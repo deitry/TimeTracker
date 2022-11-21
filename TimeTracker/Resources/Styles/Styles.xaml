@@ -487,6 +487,7 @@
                     <VisualState Name="ToggledOn">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor" Value="Khaki" />
+                            <Setter Property="TextColor" Value="{StaticResource Gray950}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>

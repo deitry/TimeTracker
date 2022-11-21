@@ -1,5 +1,7 @@
-﻿
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using SharpHook;
+using SharpHook.Native;
+
 #if WINDOWS
 using Microsoft.Maui.LifecycleEvents;
 using Microsoft.UI;
@@ -19,6 +21,8 @@ public static class MauiProgram
             fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
         });
+
+
 
 #if WINDOWS
         builder.ConfigureLifecycleEvents(events =>

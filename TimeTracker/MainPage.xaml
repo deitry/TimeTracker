@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:TimeTracker"
              WidthRequest="200"
              HeightRequest="100"
-             >
+>
 
     <ContentPage.BindingContext>
         <local:ViewModel />
@@ -40,7 +40,7 @@
                 x:Name="CounterBtn"
                 Text="{Binding TimeLeftString}"
                 SemanticProperties.Hint="Calculate elapsed time"
-                Clicked="OnCounterClicked"
+                Clicked="OnButtonClicked"
                 HorizontalOptions="Center" />
 
         </VerticalStackLayout>

@@ -27,6 +27,7 @@
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
 
 
@@ -48,11 +49,21 @@
                 HorizontalOptions="Fill" />
 
             <local:ToggleButton
-                IsEnabled="False"
                 Grid.Row="0" Grid.Column="2"
                 Margin="0"
                 Padding="0"
+                Text="Pet"
+                ToggledColor="DarkKhaki"
+                Toggled="ToggleButton_OnToggled"
+                HorizontalOptions="Fill" />
+
+            <local:ToggleButton
+                IsEnabled="False"
+                Grid.Row="0" Grid.Column="3"
+                Margin="0"
+                Padding="0"
                 Text="Custom"
+                BackgroundColor="{StaticResource Gray700}"
                 ToggledColor="DarkKhaki"
                 Toggled="ToggleButton_OnToggled"
                 HorizontalOptions="Fill" />
@@ -81,6 +92,15 @@
                 Padding="0"
                 Text="Eat"
                 ToggledColor="DarkViolet"
+                Toggled="ToggleButton_OnToggled"
+                HorizontalOptions="Fill" />
+
+            <local:ToggleButton
+                Grid.Row="1" Grid.Column="3"
+                Margin="0"
+                Padding="0"
+                Text="Leisure"
+                ToggledColor="DarkGoldenrod"
                 Toggled="ToggleButton_OnToggled"
                 HorizontalOptions="Fill" />
 

@@ -3,26 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TimeTracker.MainPage"
              xmlns:local="clr-namespace:TimeTracker"
+             Padding="0"
+             MinimumWidthRequest="100"
 >
 
     <ContentPage.BindingContext>
         <local:ViewModel />
     </ContentPage.BindingContext>
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+    <!-- <ScrollView Margin="0" HorizontalOptions="Fill"> -->
+        <Grid Margin="0"
+              HorizontalOptions="Fill"
+              Padding="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
 
             <Button
+                Margin="0"
                 x:Name="CounterBtn"
                 Text="{Binding TimeLeftString}"
                 SemanticProperties.Hint="Calculate elapsed time"
+                BackgroundColor="DarkSlateGrey"
+                TextColor="Cornsilk"
                 Clicked="OnButtonClicked"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Fill" />
 
-        </VerticalStackLayout>
-    </ScrollView>
+        </Grid>
+    <!-- </ScrollView> -->
 
 </ContentPage>

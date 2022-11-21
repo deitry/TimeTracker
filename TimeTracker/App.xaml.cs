@@ -26,6 +26,18 @@ public partial class App : Application
         Task.Run(() => _hook.Run());
     }
 
+    protected override Window CreateWindow(IActivationState activationState)
+    {
+        var window = base.CreateWindow(activationState);
+
+        window.Activated += (_, _) => Activated = true;
+        window.Deactivated += (_, _) => Activated = false;
+
+        return window;
+    }
+
+    public bool Activated { get; set; }
+
     private async void OnKeyReleased(object sender, KeyboardHookEventArgs e)
     {
         await _syncContext;
@@ -60,10 +72,10 @@ public partial class App : Application
                 break;
         }
 
-        if (WPressed && CtrlPressed && Application.Current != null)
+        if (WPressed && CtrlPressed && Activated && Application.Current != null)
         {
             var window = Windows.FirstOrDefault();
-            if (window?.Page != null && window.Page.IsFocused)
+            if (window != null)
             {
                 _hook.Dispose();
 

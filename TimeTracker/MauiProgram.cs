@@ -22,8 +22,6 @@ public static class MauiProgram
             fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
         });
 
-
-
 #if WINDOWS
         builder.ConfigureLifecycleEvents(events =>
         {
@@ -36,7 +34,7 @@ public static class MauiProgram
                     AppWindow appWindow = AppWindow.GetFromWindowId(nativeWindowId);
 
                     window.ExtendsContentIntoTitleBar = false;
-                    appWindow.Resize(new SizeInt32(200, 100));
+                    appWindow.Resize(new SizeInt32(80, 60));
 
                     var p = appWindow.Presenter as OverlappedPresenter;
                     Debug.Assert(p != null, nameof(p) + " != null");

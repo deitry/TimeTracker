@@ -8,8 +8,8 @@ internal sealed class ViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public TimeSpan TimeElapsed => _trackers.FirstOrDefault().Value?.ElapsedTime ?? default;
-    public string TimeElapsedString => TimeElapsed.ToString(@"hh\:mm\:ss");
+    public TimeSpan? TimeElapsed => _trackers.FirstOrDefault().Value?.ElapsedTime;
+    public string TimeElapsedString => TimeElapsed?.ToString(@"hh\:mm\:ss") ?? "Not running";
 
     private readonly Dictionary<string, TimeTracker> _trackers = new();
     private readonly Timer _timer;

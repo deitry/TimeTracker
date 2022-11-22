@@ -8,7 +8,8 @@
     Shell.NavBarIsVisible="False"
     MinimumWidthRequest="100"
     BackgroundColor="Lime"
-    Padding="0">
+    Padding="0"
+>
 
     <ShellContent
         ContentTemplate="{DataTemplate local:MainPage}"

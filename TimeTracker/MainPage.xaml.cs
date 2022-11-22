@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Controls;
+﻿using System.ComponentModel;
+using Microsoft.Maui.Controls;
 #if WINDOWS
 using Windows.Graphics;
 using Microsoft.UI;
@@ -17,6 +18,12 @@ public partial class MainPage : ContentPage
 
         _viewModel = (BindingContext as ViewModel) !;
         _viewModel.Alert += ViewModelOnAlert;
+
+        this.PropertyChanged += (sender, e) =>
+        {
+            if (e.PropertyName == nameof(Title) && this.Window != null)
+                this.Window.Title = this.Title;
+        };
     }
 
     private static void ViewModelOnAlert(TimeTracker tracker)

@@ -5,6 +5,7 @@
              xmlns:local="clr-namespace:TimeTracker"
              Padding="0"
              MinimumWidthRequest="100"
+             Title="{Binding TimeElapsedString}"
 >
              <!-- BackgroundColor="MediumOrchid" -->
 
@@ -20,19 +21,19 @@
         <local:ViewModel />
     </ContentPage.BindingContext>
 
-    <Grid HorizontalOptions="Start"
-          MinimumWidthRequest="100"
-          Margin="0"
-          Padding="0"
-          x:DataType="Window"
-          WidthRequest="{Binding Width, Source={RelativeSource AncestorType={x:Type Window}}}"
-          >
-          <!-- BackgroundColor="Coral" -->
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
+    <!-- <Grid HorizontalOptions="Start" -->
+    <!--       MinimumWidthRequest="100" -->
+    <!--       Margin="0" -->
+    <!--       Padding="0" -->
+    <!--       x:DataType="Window" -->
+    <!--       WidthRequest="{Binding Width, Source={RelativeSource AncestorType={x:Type Window}}}" -->
+    <!--       > -->
+    <!--       ~1~ BackgroundColor="Coral" @1@ -->
+    <!-- -->
+    <!--     <Grid.RowDefinitions> -->
+    <!--         <RowDefinition Height="*"/> -->
+    <!--         <RowDefinition Height="auto"/> -->
+    <!--     </Grid.RowDefinitions> -->
 
         <!-- <Grid.ColumnDefinitions> -->
         <!--     <ColumnDefinition Width="{Binding Width, Source={RelativeSource AncestorType={x:Type Window}}}" x:DataType="Window" /> -->
@@ -130,12 +131,12 @@
 
         </FlexLayout>
 
-        <Label
-            Grid.Row="1"
-            Text="{Binding TimeElapsedString}"
-            x:DataType="local:ViewModel"
-            />
-    </Grid>
+        <!-- <Label -->
+        <!--     Grid.Row="1" -->
+        <!--     Text="{Binding TimeElapsedString}" -->
+        <!--     x:DataType="local:ViewModel" -->
+        <!--     /> -->
+    <!-- </Grid> -->
     <!-- </ScrollView> -->
 
 </ContentPage>

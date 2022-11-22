@@ -34,7 +34,7 @@ public static class MauiProgram
                     AppWindow appWindow = AppWindow.GetFromWindowId(nativeWindowId);
 
                     window.ExtendsContentIntoTitleBar = false;
-                    appWindow.Resize(new SizeInt32(220, 120));
+                    appWindow.Resize(new SizeInt32(515, 100));
 
                     var p = appWindow.Presenter as OverlappedPresenter;
                     Debug.Assert(p != null, nameof(p) + " != null");

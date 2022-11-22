@@ -6,30 +6,44 @@
              Padding="0"
              MinimumWidthRequest="100"
 >
+             <!-- BackgroundColor="MediumOrchid" -->
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="local:ToggleButton">
+                <Setter Property="WidthRequest" Value="50"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.BindingContext>
         <local:ViewModel />
     </ContentPage.BindingContext>
 
-    <!-- <ScrollView Margin="0" HorizontalOptions="Fill"> -->
-        <Grid Margin="0"
-              HorizontalOptions="Fill"
-              Padding="0"
-              MinimumWidthRequest="30">
+    <Grid HorizontalOptions="Start"
+          MinimumWidthRequest="100"
+          Margin="0"
+          Padding="0"
+          x:DataType="Window"
+          WidthRequest="{Binding Width, Source={RelativeSource AncestorType={x:Type Window}}}"
+          >
+          <!-- BackgroundColor="Coral" -->
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="50"/>
-            </Grid.ColumnDefinitions>
+        <!-- <Grid.ColumnDefinitions> -->
+        <!--     <ColumnDefinition Width="{Binding Width, Source={RelativeSource AncestorType={x:Type Window}}}" x:DataType="Window" /> -->
+        <!-- </Grid.ColumnDefinitions> -->
 
+        <FlexLayout Margin="0"
+                    Padding="0"
+                    Wrap="Wrap"
+                    HorizontalOptions="Fill">
+                    <!-- BackgroundColor="Aqua" -->
+                    <!-- JustifyContent="SpaceEvenly" -->
 
             <!-- TODO: SwitchCell ? -->
             <local:ToggleButton
@@ -40,7 +54,6 @@
                 HorizontalOptions="Fill" />
 
             <local:ToggleButton
-                Grid.Row="0" Grid.Column="1"
                 Margin="0"
                 Padding="0"
                 Text="Call"
@@ -49,7 +62,6 @@
                 HorizontalOptions="Fill" />
 
             <local:ToggleButton
-                Grid.Row="0" Grid.Column="2"
                 Margin="0"
                 Padding="0"
                 Text="Pet"
@@ -58,18 +70,14 @@
                 HorizontalOptions="Fill" />
 
             <local:ToggleButton
-                IsEnabled="False"
-                Grid.Row="0" Grid.Column="3"
                 Margin="0"
                 Padding="0"
-                Text="Custom"
-                BackgroundColor="{StaticResource Gray700}"
-                ToggledColor="DarkKhaki"
+                Text="Review"
+                ToggledColor="DarkSeaGreen"
                 Toggled="ToggleButton_OnToggled"
                 HorizontalOptions="Fill" />
 
             <local:ToggleButton
-                Grid.Row="1" Grid.Column="0"
                 Margin="0"
                 Padding="0"
                 Text="Sport"
@@ -78,7 +86,6 @@
                 HorizontalOptions="Fill" />
 
             <local:ToggleButton
-                Grid.Row="1" Grid.Column="1"
                 Margin="0"
                 Padding="0"
                 Text="Game"
@@ -87,7 +94,6 @@
                 HorizontalOptions="Fill" />
 
             <local:ToggleButton
-                Grid.Row="1" Grid.Column="2"
                 Margin="0"
                 Padding="0"
                 Text="Eat"
@@ -96,7 +102,6 @@
                 HorizontalOptions="Fill" />
 
             <local:ToggleButton
-                Grid.Row="1" Grid.Column="3"
                 Margin="0"
                 Padding="0"
                 Text="Leisure"
@@ -104,11 +109,33 @@
                 Toggled="ToggleButton_OnToggled"
                 HorizontalOptions="Fill" />
 
-            <Label
-                Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
-                Text="{Binding TimeLeftString}"
-                />
-        </Grid>
+            <local:ToggleButton
+                Margin="0"
+                Padding="0"
+                Text="Meditation"
+                FontSize="10"
+                ToggledColor="DarkRed"
+                Toggled="ToggleButton_OnToggled"
+                HorizontalOptions="Fill" />
+
+            <local:ToggleButton
+                IsEnabled="False"
+                Margin="0"
+                Padding="0"
+                Text="Custom"
+                BackgroundColor="{StaticResource Gray700}"
+                ToggledColor="DarkKhaki"
+                Toggled="ToggleButton_OnToggled"
+                HorizontalOptions="Fill" />
+
+        </FlexLayout>
+
+        <Label
+            Grid.Row="1"
+            Text="{Binding TimeLeftString}"
+            x:DataType="local:ViewModel"
+            />
+    </Grid>
     <!-- </ScrollView> -->
 
 </ContentPage>

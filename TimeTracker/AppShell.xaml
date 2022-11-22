@@ -6,9 +6,9 @@
     xmlns:local="clr-namespace:TimeTracker"
     Shell.FlyoutBehavior="Disabled"
     Shell.NavBarIsVisible="False"
-    Padding="0"
-    MinimumWidthRequest="50"
-    WidthRequest="50">
+    MinimumWidthRequest="100"
+    BackgroundColor="Lime"
+    Padding="0">
 
     <ShellContent
         ContentTemplate="{DataTemplate local:MainPage}"

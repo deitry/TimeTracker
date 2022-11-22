@@ -27,14 +27,19 @@ public partial class MainPage : ContentPage
             await db.InsertAsync(tracker.ToDb());
         });
 
+        // ShowAlert(tracker);
+    }
+
+    private static void ShowAlert(TimeTracker tracker)
+    {
         // await DisplayAlert(tracker.Name, $"Elapsed: {tracker.ElapsedTime}", "Ok");
-        var window = new Window()
+
+        var window = new Window
         {
             Page = new AlertPage(tracker),
+            MinimumHeight = 150,
+            MinimumWidth = 185,
         };
-
-        window.MinimumHeight = 150;
-        window.MinimumWidth = 185;
 
         Application.Current?.OpenWindow(window);
     }

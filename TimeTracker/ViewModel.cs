@@ -8,19 +8,8 @@ internal sealed class ViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public string TimeLeftString
-    {
-        get
-        {
-            var first = _trackers.FirstOrDefault().Value;
-            if (first != null)
-            {
-                return first.ElapsedTime.ToString(@"hh\:mm\:ss");
-            }
-
-            return string.Empty;
-        }
-    }
+    public TimeSpan TimeElapsed => _trackers.FirstOrDefault().Value?.ElapsedTime ?? default;
+    public string TimeElapsedString => TimeElapsed.ToString(@"hh\:mm\:ss");
 
     private readonly Dictionary<string, TimeTracker> _trackers = new();
     private readonly Timer _timer;
@@ -63,12 +52,12 @@ internal sealed class ViewModel : INotifyPropertyChanged
         if (!_trackers.Any())
             _timer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
 
-        OnPropertyChanged(nameof(TimeLeftString));
+        OnPropertyChanged(nameof(TimeElapsedString));
     }
 
     public void Tick(object? obj)
     {
-        OnPropertyChanged(nameof(TimeLeftString));
+        OnPropertyChanged(nameof(TimeElapsedString));
     }
 
     public void Start(string tbText)

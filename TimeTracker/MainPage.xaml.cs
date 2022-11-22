@@ -19,8 +19,14 @@ public partial class MainPage : ContentPage
         _viewModel.Alert += ViewModelOnAlert;
     }
 
-    private void ViewModelOnAlert(TimeTracker tracker)
+    private static void ViewModelOnAlert(TimeTracker tracker)
     {
+        Task.Run(async () =>
+        {
+            var db = await Database.Instance;
+            await db.InsertAsync(tracker.ToDb());
+        });
+
         // await DisplayAlert(tracker.Name, $"Elapsed: {tracker.ElapsedTime}", "Ok");
         var window = new Window()
         {

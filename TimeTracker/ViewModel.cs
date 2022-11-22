@@ -6,17 +6,26 @@ namespace TimeTracker;
 
 internal sealed class ViewModel : INotifyPropertyChanged
 {
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
-    public string TimeLeftString => "";
-        // (TimeLimit - _timerStopwatch.Elapsed).ToString(@"hh\:mm\:ss");
-    // private TimeSpan _timeLeft = TimeSpan.FromMinutes(30);
-    // private readonly Stopwatch _stopwatch = new Stopwatch();
+    public string TimeLeftString
+    {
+        get
+        {
+            var first = _trackers.FirstOrDefault().Value;
+            if (first != null)
+            {
+                return first.ElapsedTime.ToString(@"hh\:mm\:ss");
+            }
+
+            return string.Empty;
+        }
+    }
+
     private readonly Dictionary<string, TimeTracker> _trackers = new();
     private readonly Timer _timer;
     private const double Period = 1;
 
-    // private Stopwatch _timerStopwatch = new();
     private readonly TimeSpan TimeLimit = TimeSpan.FromMinutes(30);
 
     public delegate void AlertHandler(TimeTracker timeTracker);
@@ -57,12 +66,9 @@ internal sealed class ViewModel : INotifyPropertyChanged
         OnPropertyChanged(nameof(TimeLeftString));
     }
 
-    public void Tick(object obj)
+    public void Tick(object? obj)
     {
         OnPropertyChanged(nameof(TimeLeftString));
-
-        // if (_timerStopwatch.Elapsed > TimeLimit)
-        //     _timerStopwatch.Stop();
     }
 
     public void Start(string tbText)

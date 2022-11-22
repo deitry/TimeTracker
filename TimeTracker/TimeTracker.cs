@@ -31,4 +31,14 @@ public class TimeTracker
 
         return this;
     }
+
+    public TrackedTimeDb ToDb()
+    {
+        return new TrackedTimeDb
+        {
+            Name = Name,
+            StartTime = StartTime,
+            ElapsedTime = ElapsedTime,
+        };
+    }
 }

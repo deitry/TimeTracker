@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.Maui.Platform;
 using SharpHook;
 using SharpHook.Native;
 
@@ -34,12 +35,13 @@ public static class MauiProgram
                     AppWindow appWindow = AppWindow.GetFromWindowId(nativeWindowId);
 
                     window.ExtendsContentIntoTitleBar = false;
-                    appWindow.Resize(new SizeInt32(520, 72));
+                    appWindow.Resize(App.HorizontalDefault);
+                    // appWindow.Resize(App.VerticalDefault);
 
                     var p = appWindow.Presenter as OverlappedPresenter;
                     Debug.Assert(p != null, nameof(p) + " != null");
 
-                    // p.SetBorderAndTitleBar(false, false);
+                    p.SetBorderAndTitleBar(false, false);
                     p.IsMaximizable = false;
                     p.IsMinimizable = false;
                     p.IsAlwaysOnTop = true;

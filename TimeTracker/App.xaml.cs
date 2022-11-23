@@ -3,6 +3,7 @@ using SharpHook.Native;
 
 #if WINDOWS
 using Windows.Graphics;
+using ABI.Windows.Devices.Input;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 #endif
@@ -11,6 +12,11 @@ namespace TimeTracker;
 
 public partial class App : Application
 {
+#if WINDOWS
+    public static readonly SizeInt32 HorizontalDefault = new SizeInt32(925, 50);
+    public static readonly SizeInt32 VerticalDefault = new SizeInt32(85, 435);
+#endif
+
     public App()
     {
         InitializeComponent();

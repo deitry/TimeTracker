@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Layouts;
+using Colors = Microsoft.UI.Colors;
 #if WINDOWS
 using Windows.Graphics;
 using Microsoft.UI;
@@ -26,6 +28,24 @@ public partial class MainPage : ContentPage
         };
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+#if WINDOWS
+        // var nativeWindow = Window.Handler.PlatformView;
+        // IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(nativeWindow);
+        // WindowId WindowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
+        // AppWindow appWindow = AppWindow.GetFromWindowId(WindowId);
+        //
+        // appWindow.Resize(App.VerticalDefault);
+        // // appWindow.TitleBar.BackgroundColor = Colors.Black;
+        // // appWindow.TitleBar.ForegroundColor = Colors.Aqua;
+        // // appWindow.TitleBar.InactiveBackgroundColor = Colors.Bisque;
+        // // appWindow.TitleBar.ButtonBackgroundColor = Colors.Brown;
+#endif
+    }
+
     private static void ViewModelOnAlert(TimeTracker tracker)
     {
         Task.Run(async () =>
@@ -45,7 +65,7 @@ public partial class MainPage : ContentPage
         {
             Page = new AlertPage(tracker),
             MinimumHeight = 150,
-            MinimumWidth = 185,
+            // MinimumWidth = 185,
         };
 
         Application.Current?.OpenWindow(window);
@@ -74,5 +94,88 @@ public partial class MainPage : ContentPage
                 _viewModel.Activate(tb.IsToggled, taskName);
             });
         }
+    }
+
+    private bool _dragging;
+    private Point? _relativePosition;
+
+    private void PointerGestureRecognizer_OnPointerMovedRecognizer_OnPointerMoved(object? sender, PointerEventArgs e)
+    {
+#if WINDOWS
+        if (_dragging)
+        {
+            var position = e.GetPosition(null);
+            if (position.HasValue)
+            {
+                _relativePosition ??= position;
+
+                // make absolute position
+                var diff = position.Value - _relativePosition.Value;
+
+                var newPosition = new Point(diff.Width + Window.X, diff.Height + Window.Y);
+
+                var nativeWindow = Window.Handler.PlatformView;
+                IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(nativeWindow);
+                WindowId WindowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
+                AppWindow appWindow = AppWindow.GetFromWindowId(WindowId);
+
+                appWindow.Move(new PointInt32((int)newPosition.X, (int)newPosition.Y));
+            }
+        }
+#endif
+    }
+
+    private void TapGestureRecognizer_OnTappedGestureRecognizer_OnTapped(object? sender, TappedEventArgs e)
+    {
+        _dragging = !_dragging;
+        if (!_dragging)
+        {
+            _relativePosition = null;
+        }
+    }
+
+    private void TapGestureRecognizer_OnTapped(object? sender, TappedEventArgs e)
+    {
+        SwitchSize();
+    }
+
+    private void SwitchSize()
+    {
+#if WINDOWS
+        var nativeWindow = Window.Handler.PlatformView;
+        IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(nativeWindow);
+        WindowId WindowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
+        AppWindow appWindow = AppWindow.GetFromWindowId(WindowId);
+
+        if (Window.Height > Window.Width)
+        {
+            if (Window.X < 0 || Window.Y < 0)
+            {
+                appWindow.MoveAndResize(new RectInt32(0, 0, App.HorizontalDefault.Width, App.HorizontalDefault.Height));
+            }
+            else
+            {
+                // MainLayout.Direction = FlexDirection.Row;
+                appWindow.Resize(App.HorizontalDefault);
+            }
+        }
+        else
+        {
+            if (Window.X < 0 || Window.Y < 0)
+            {
+                appWindow.MoveAndResize(new RectInt32(0, 0, App.VerticalDefault.Width, App.VerticalDefault.Height));
+            }
+            else
+            {
+                // MainLayout.Direction = FlexDirection.Column;
+                appWindow.Resize(App.VerticalDefault);
+            }
+        }
+#endif
+    }
+
+    private void ClickGestureRecognizer_OnClicked(object? sender, EventArgs e)
+    {
+        SwitchSize();
     }
 }

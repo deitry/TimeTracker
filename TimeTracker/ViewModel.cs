@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using Microsoft.Maui.Layouts;
 
 namespace TimeTracker;
 
@@ -9,7 +10,8 @@ internal sealed class ViewModel : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public TimeSpan? TimeElapsed => _trackers.FirstOrDefault().Value?.ElapsedTime;
-    public string TimeElapsedString => TimeElapsed?.ToString(@"hh\:mm\:ss") ?? "Not running";
+    public string TimeElapsedString => TimeElapsed?.ToString(@"hh\:mm\:ss") ?? "=";
+    public FlexDirection Direction { get; }
 
     private readonly Dictionary<string, TimeTracker> _trackers = new();
     private readonly Timer _timer;

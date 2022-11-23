@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Layouts;
 using Colors = Microsoft.UI.Colors;
@@ -161,5 +162,40 @@ public partial class MainPage : ContentPage
     private void ClickGestureRecognizer_OnClicked(object? sender, EventArgs e)
     {
         SwitchSize();
+    }
+
+    private void Settings_OnClicked(object? sender, EventArgs e)
+    {
+        if (Application.Current?.Windows.LastOrDefault(w => w.Page is StatisticsPage) != null)
+        {
+            return;
+        }
+
+        var window = new Window
+        {
+            Page = new StatisticsPage(),
+            Height = 300,
+            Width = 300,
+        };
+
+        Application.Current?.OpenWindow(window);
+
+        var statisticsWindow = Application.Current?.Windows.LastOrDefault(w => w.Page is StatisticsPage);
+
+#if WINDOWS
+        if (statisticsWindow != null)
+        {
+            var nativeWindow = statisticsWindow.Handler.PlatformView;
+            IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(nativeWindow);
+            WindowId WindowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
+            AppWindow appWindow = AppWindow.GetFromWindowId(WindowId);
+
+            appWindow.Resize(new SizeInt32(500, 400));
+            var p = appWindow.Presenter as OverlappedPresenter;
+            Debug.Assert(p != null, nameof(p) + " != null");
+
+            p.SetBorderAndTitleBar(true, true);
+        }
+#endif
     }
 }

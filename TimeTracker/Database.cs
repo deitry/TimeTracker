@@ -57,4 +57,13 @@ public class Database
 
         return this;
     }
+
+    public Task<List<TrackedTimeDb>> ListDay(DateTime day)
+    {
+        var fullDay = day + TimeSpan.FromDays(1);
+
+        return _database.Table<TrackedTimeDb>()
+            .Where(t => t.StartTime >= day && t.StartTime < fullDay)
+            .ToListAsync();
+    }
 }

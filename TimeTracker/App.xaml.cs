@@ -31,7 +31,8 @@ public partial class App : Application
         _hook.KeyPressed += OnKeyPressed;
         _hook.KeyReleased += OnKeyReleased;
 
-        // Task.Run(() => _hook.Run());
+        if (!Debugger.IsAttached)
+            Task.Run(() => _hook.Run());
     }
 
     protected override Window CreateWindow(IActivationState activationState)

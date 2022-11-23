@@ -1,4 +1,5 @@
-﻿using SharpHook;
+﻿using System.Diagnostics;
+using SharpHook;
 using SharpHook.Native;
 
 #if WINDOWS
@@ -13,8 +14,9 @@ namespace TimeTracker;
 public partial class App : Application
 {
 #if WINDOWS
-    public static readonly SizeInt32 HorizontalDefault = new SizeInt32(925, 50);
-    public static readonly SizeInt32 VerticalDefault = new SizeInt32(85, 435);
+    public const int ElementsInPanel = 15;
+    public static readonly SizeInt32 HorizontalDefault = new SizeInt32(70 * ElementsInPanel, 50);
+    public static readonly SizeInt32 VerticalDefault = new SizeInt32(85, 30 * ElementsInPanel + 15);
 #endif
 
     public App()

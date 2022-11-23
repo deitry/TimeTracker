@@ -149,27 +149,11 @@ public partial class MainPage : ContentPage
 
         if (Window.Height > Window.Width)
         {
-            if (Window.X < 0 || Window.Y < 0)
-            {
-                appWindow.MoveAndResize(new RectInt32(0, 0, App.HorizontalDefault.Width, App.HorizontalDefault.Height));
-            }
-            else
-            {
-                // MainLayout.Direction = FlexDirection.Row;
-                appWindow.Resize(App.HorizontalDefault);
-            }
+            appWindow.MoveAndResize(new RectInt32(950, 100, App.HorizontalDefault.Width, App.HorizontalDefault.Height));
         }
         else
         {
-            if (Window.X < 0 || Window.Y < 0)
-            {
-                appWindow.MoveAndResize(new RectInt32(0, 0, App.VerticalDefault.Width, App.VerticalDefault.Height));
-            }
-            else
-            {
-                // MainLayout.Direction = FlexDirection.Column;
-                appWindow.Resize(App.VerticalDefault);
-            }
+            appWindow.MoveAndResize(new RectInt32(1840, 260, App.VerticalDefault.Width, App.VerticalDefault.Height));
         }
 #endif
     }

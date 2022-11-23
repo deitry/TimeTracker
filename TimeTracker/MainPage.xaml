@@ -10,7 +10,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-/
+
             <Style TargetType="local:ToggleButton">
                 <Setter Property="WidthRequest" Value="70" />
                 <Setter Property="HeightRequest" Value="30" />
@@ -78,8 +78,13 @@
             x:DataType="local:ViewModel" />
 
         <local:ToggleButton Margin="0"
-                            Text="Work"
+                            Text="Code"
                             ToggledColor="DarkSlateBlue"
+                            Toggled="ToggleButton_OnToggled"/>
+
+        <local:ToggleButton Margin="0"
+                            Text="Tasks"
+                            ToggledColor="DarkCyan"
                             Toggled="ToggleButton_OnToggled"/>
 
         <local:ToggleButton Margin="0"
@@ -90,20 +95,19 @@
 
         <local:ToggleButton Margin="0"
                             Padding="0"
-                            Text="Pet"
-                            ToggledColor="DarkKhaki"
-                            Toggled="ToggleButton_OnToggled"/>
-
-        <local:ToggleButton Margin="0"
-                            Padding="0"
                             Text="Review"
                             ToggledColor="DarkSeaGreen"
                             Toggled="ToggleButton_OnToggled"/>
 
         <local:ToggleButton Margin="0"
                             Padding="0"
+                            Text="Pet"
+                            ToggledColor="DarkKhaki"
+                            Toggled="ToggleButton_OnToggled"/>
+
+        <local:ToggleButton Margin="0"
+                            Padding="0"
                             Text="Sport"
-                            ToggledColor="DarkMagenta"
                             Toggled="ToggleButton_OnToggled"/>
 
         <local:ToggleButton Margin="0"

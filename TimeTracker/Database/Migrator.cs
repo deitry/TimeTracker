@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using SQLite;
+using TimeTracker.Database.Migrations;
 using TimeTracker.Migrations;
 
 namespace TimeTracker;
@@ -14,6 +15,7 @@ public static class Migrator
     private static readonly List<IDbMigration> Migrations = new()
     {
         new M1_InitializeDb(),
+        // new M2_AddFields(),
     };
 
     public static async Task Migrate(SQLiteAsyncConnection db)

@@ -51,7 +51,7 @@ public partial class MainPage : ContentPage
     {
         Task.Run(async () =>
         {
-            var db = await Database.Instance;
+            var db = await TrackerDatabase.Instance;
             await db.InsertAsync(tracker.ToDb());
         });
 

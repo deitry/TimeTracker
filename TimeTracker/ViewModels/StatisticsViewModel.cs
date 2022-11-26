@@ -16,7 +16,7 @@ public sealed class StatisticsViewModel : INotifyPropertyChanged
 
     async Task Refresh()
     {
-        var db = await Database.Instance;
+        var db = await TrackerDatabase.Instance;
         DayStats = await DayEntries(db, DateTime.Today);
         YesterdayStats = await DayEntries(db, DateTime.Today - TimeSpan.FromDays(1));
 
@@ -24,7 +24,7 @@ public sealed class StatisticsViewModel : INotifyPropertyChanged
         OnPropertyChanged(nameof(YesterdayStats));
     }
 
-    private async Task<List<string>> DayEntries(Database db, DateTime day)
+    private async Task<List<string>> DayEntries(TrackerDatabase db, DateTime day)
     {
         var list = await db.ListDay(day);
 

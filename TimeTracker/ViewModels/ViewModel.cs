@@ -11,7 +11,6 @@ internal sealed class ViewModel : INotifyPropertyChanged
 
     public TimeSpan? TimeElapsed => _trackers.FirstOrDefault().Value?.ElapsedTime;
     public string TimeElapsedString => TimeElapsed?.ToString(@"hh\:mm\:ss") ?? "=";
-    public FlexDirection Direction { get; }
 
     private readonly Dictionary<string, TimeTracker> _trackers = new();
     private readonly Timer _timer;
@@ -20,7 +19,7 @@ internal sealed class ViewModel : INotifyPropertyChanged
     private readonly TimeSpan TimeLimit = TimeSpan.FromMinutes(30);
 
     public delegate void AlertHandler(TimeTracker timeTracker);
-    public event AlertHandler Alert;
+    public event AlertHandler? Alert;
 
     public ViewModel()
     {
@@ -72,12 +71,12 @@ internal sealed class ViewModel : INotifyPropertyChanged
         _timer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(Period));
     }
 
-    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    private bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+    private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
         if (EqualityComparer<T>.Default.Equals(field, value)) return false;
         field = value;

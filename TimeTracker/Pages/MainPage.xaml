@@ -125,14 +125,15 @@
 
         <local:ToggleButton IsEnabled="False"
                             Text="Custom"
-                            BackgroundColor="{StaticResource Gray700}"
                             ToggledColor="DarkKhaki"
                             Toggled="ToggleButton_OnToggled"/>
 
         <Button Text="Stats" Clicked="Settings_OnClicked"
                 Padding="0" Margin="0"
                 WidthRequest="70"
-                HeightRequest="30"/>
+                HeightRequest="30"
+                BackgroundColor="{StaticResource Gray700}"
+                TextColor="{StaticResource Gray100}"/>
 
         <Label Text="=" TextColor="{StaticResource Gray500}"/>
 

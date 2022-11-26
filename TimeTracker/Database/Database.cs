@@ -2,36 +2,6 @@
 
 namespace TimeTracker;
 
-public static class Constants
-{
-    public const string DatabasePath = "tracker.db";
-
-    public const SQLiteOpenFlags Flags =
-        // open the database in read/write mode
-        SQLiteOpenFlags.ReadWrite |
-        // create the database if it doesn't exist
-        SQLiteOpenFlags.Create |
-        // enable multi-threaded database access
-        SQLiteOpenFlags.SharedCache;
-}
-
-public interface ITable
-{
-    int Id { get; }
-}
-
-public class TrackedTimeDb : ITable
-{
-    [PrimaryKey, AutoIncrement]
-    public int Id { get; set; }
-
-    public string Name { get; set; }
-
-    public DateTime StartTime { get; set; }
-
-    public TimeSpan ElapsedTime { get; init; }
-}
-
 public class Database
 {
     private readonly SQLiteAsyncConnection _database;
@@ -53,8 +23,7 @@ public class Database
 
     private async Task<Database> InitializeDb()
     {
-        await _database.CreateTableAsync<TrackedTimeDb>();
-
+        await Migrator.Migrate(_database);
         return this;
     }
 

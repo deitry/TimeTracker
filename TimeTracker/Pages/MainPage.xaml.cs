@@ -1,8 +1,14 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Layouts;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Data;
+using Application = Microsoft.Maui.Controls.Application;
+using Binding = Microsoft.Maui.Controls.Binding;
 using Colors = Microsoft.UI.Colors;
+using Window = Microsoft.Maui.Controls.Window;
 #if WINDOWS
 using Windows.Graphics;
 using Microsoft.UI;
@@ -19,6 +25,13 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
 
+        var context = SynchronizationContext.Current;
+        Task.Run(async () =>
+        {
+            await context!;
+            await InitializeLayout();
+        });
+
         _viewModel = (BindingContext as ViewModel) !;
         _viewModel.Alert += ViewModelOnAlert;
 
@@ -27,6 +40,53 @@ public partial class MainPage : ContentPage
             if (e.PropertyName == nameof(Title) && this.Window != null)
                 this.Window.Title = this.Title;
         };
+    }
+
+    private async Task InitializeLayout()
+    {
+        var db = await TrackerDatabase.Instance;
+        var categories = await db.GetCategories();
+
+        var labelTime = new Label();
+
+        labelTime.BindingContext = _viewModel;
+        labelTime.SetBinding(Label.TextProperty, nameof(_viewModel.TimeElapsedString));
+
+        MainLayout.Children.Add(labelTime);
+
+        foreach (var category in categories)
+        {
+            var button = new ToggleButton()
+            {
+                Text = category.Name,
+                ToggledColor = category.ColorObject,
+            };
+
+            button.Toggled += ToggleButton_OnToggled;
+            MainLayout.Children.Add(button);
+        }
+
+        var custom = new ToggleButton()
+        {
+            Text = "Custom",
+            // ToggledColor = Microsoft.Maui.Graphics.Colors.LightGray,
+            IsEnabled = false,
+            BackgroundColor = Color.FromArgb("#242424"),
+        };
+        // button.Toggled += ToggleButton_OnToggled;
+        MainLayout.Children.Add(custom);
+
+        var stats = new Button
+        {
+            Text = "Stats",
+        };
+        stats.Clicked += Settings_OnClicked;
+        MainLayout.Children.Add(stats);
+
+        MainLayout.Children.Add(new Label()
+        {
+            Text = "=",
+        });
     }
 
     protected override void OnAppearing()
@@ -72,7 +132,7 @@ public partial class MainPage : ContentPage
         Application.Current?.OpenWindow(window);
     }
 
-    private void ToggleButton_OnToggled(object sender, ToggledEventArgs e)
+    private void ToggleButton_OnToggled(object? sender, ToggledEventArgs e)
     {
         var context = SynchronizationContext.Current;
         if (sender is ToggleButton tb)

@@ -20,6 +20,17 @@
                 <Setter Property="Padding" Value="0"/>
             </Style>
 
+            <Style TargetType="Button">
+                <Setter Property="WidthRequest" Value="70" />
+                <Setter Property="HeightRequest" Value="30" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource Gray600}" />
+                <Setter Property="TextColor" Value="{StaticResource Gray100}" />
+            </Style>
+
             <Style TargetType="Label">
                 <Setter Property="WidthRequest" Value="70" />
                 <Setter Property="HeightRequest" Value="30" />
@@ -27,6 +38,7 @@
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
                 <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="TextColor" Value="{StaticResource Gray500}" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -59,7 +71,8 @@
                 Wrap="Wrap"
                 Direction="Column"
                 JustifyContent="SpaceAround"
-                BackgroundColor="Transparent">
+                BackgroundColor="Transparent"
+    >
         <!-- Unfocused="VisualElement_OnUnfocused" -->
         <!-- Focused="VisualElement_OnFocused" -->
         <!-- HorizontalOptions="Center" -->
@@ -73,69 +86,6 @@
             <PointerGestureRecognizer
                 PointerMoved="PointerGestureRecognizer_OnPointerMovedRecognizer_OnPointerMoved" />
         </FlexLayout.GestureRecognizers>
-
-        <Label
-            Text="{Binding TimeElapsedString}"
-            TextColor="{StaticResource Gray500}"
-            x:DataType="local:ViewModel" />
-
-        <local:ToggleButton Text="Code"
-                            ToggledColor="DarkSlateBlue"
-                            Toggled="ToggleButton_OnToggled"/>
-
-        <local:ToggleButton Text="Tasks"
-                            ToggledColor="DarkCyan"
-                            Toggled="ToggleButton_OnToggled"/>
-
-        <local:ToggleButton Text="Call"
-                            ToggledColor="DarkGreen"
-                            Toggled="ToggleButton_OnToggled"/>
-
-        <local:ToggleButton Text="Review"
-                            ToggledColor="DarkSeaGreen"
-                            Toggled="ToggleButton_OnToggled"/>
-
-        <local:ToggleButton Text="Pet"
-                            ToggledColor="DarkKhaki"
-                            Toggled="ToggleButton_OnToggled"/>
-
-        <local:ToggleButton Text="Sport"
-                            Toggled="ToggleButton_OnToggled"/>
-
-        <local:ToggleButton Text="Game"
-                            ToggledColor="DarkOrchid"
-                            Toggled="ToggleButton_OnToggled"/>
-
-        <local:ToggleButton Text="Eat"
-                            ToggledColor="DarkViolet"
-                            Toggled="ToggleButton_OnToggled"/>
-
-        <local:ToggleButton Text="Leisure"
-                            ToggledColor="DarkGoldenrod"
-                            Toggled="ToggleButton_OnToggled"/>
-
-        <local:ToggleButton Text="Meditation"
-                            FontSize="10"
-                            ToggledColor="DarkRed"
-                            Toggled="ToggleButton_OnToggled"/>
-
-        <local:ToggleButton Text="Family"
-                            ToggledColor="DarkOliveGreen"
-                            Toggled="ToggleButton_OnToggled"/>
-
-        <local:ToggleButton IsEnabled="False"
-                            Text="Custom"
-                            ToggledColor="DarkKhaki"
-                            Toggled="ToggleButton_OnToggled"/>
-
-        <Button Text="Stats" Clicked="Settings_OnClicked"
-                Padding="0" Margin="0"
-                WidthRequest="70"
-                HeightRequest="30"
-                BackgroundColor="{StaticResource Gray700}"
-                TextColor="{StaticResource Gray100}"/>
-
-        <Label Text="=" TextColor="{StaticResource Gray500}"/>
 
     </FlexLayout>
 

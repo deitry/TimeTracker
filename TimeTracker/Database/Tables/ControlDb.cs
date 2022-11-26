@@ -9,6 +9,7 @@ public class ControlDb : ITable
         Version,
     }
 
+    [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
     [Ignore]

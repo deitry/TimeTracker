@@ -5,7 +5,10 @@ namespace TimeTracker;
 
 public class CategoryDb : ITable
 {
+    [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
+
+    public bool Enabled { get; set; }
 
     public string Name { get; set; }
 
@@ -20,6 +23,6 @@ public class CategoryDb : ITable
     public Color ColorObject
     {
         get => Color.Parse(ColorString);
-        set => ColorString = value.ToString();
+        set => ColorString = value.ToArgbHex();
     }
 }

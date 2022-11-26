@@ -46,80 +46,79 @@ public class TrackerDatabase
             new CategoryDb()
             {
                 Name = "Code",
+                Enabled = true,
                 ColorObject = Colors.DarkSlateBlue,
                 CategoryGroup = Work,
             },
             new CategoryDb()
             {
                 Name = "Tasks",
+                Enabled = true,
                 ColorObject = Colors.DarkCyan,
                 CategoryGroup = Work,
             },
             new CategoryDb()
             {
                 Name = "Call",
+                Enabled = true,
                 ColorObject = Colors.DarkGreen,
                 CategoryGroup = Work,
             },
             new CategoryDb()
             {
                 Name = "Review",
+                Enabled = true,
                 ColorObject = Colors.DarkSeaGreen,
                 CategoryGroup = Work,
             },
             new CategoryDb()
             {
                 Name = "Pet",
+                Enabled = true,
                 ColorObject = Colors.DarkKhaki,
                 CategoryGroup = Work,
             },
             new CategoryDb()
             {
                 Name = "Sport",
+                Enabled = true,
                 ColorObject = Colors.LightGray,
-                CategoryGroup = Work,
-            },
-            new CategoryDb()
-            {
-                Name = "Review",
-                ColorObject = Colors.DarkSeaGreen,
-                CategoryGroup = Work,
+                CategoryGroup = Personal,
             },
             new CategoryDb()
             {
                 Name = "Game",
+                Enabled = true,
                 ColorObject = Colors.DarkOrchid,
-                CategoryGroup = Work,
+                CategoryGroup = Personal,
             },
             new CategoryDb()
             {
                 Name = "Eat",
+                Enabled = true,
                 ColorObject = Colors.DarkViolet,
-                CategoryGroup = Work,
+                CategoryGroup = Personal,
             },
             new CategoryDb()
             {
                 Name = "Leisure",
+                Enabled = true,
                 ColorObject = Colors.DarkGoldenrod,
-                CategoryGroup = Work,
+                CategoryGroup = Personal,
             },
             new CategoryDb()
             {
                 Name = "Meditation",
+                Enabled = true,
                 ColorObject = Colors.DarkRed,
-                CategoryGroup = Work,
+                CategoryGroup = Personal,
             },
             new CategoryDb()
             {
                 Name = "Family",
+                Enabled = true,
                 ColorObject = Colors.DarkOliveGreen,
-                CategoryGroup = Work,
-            },
-            new CategoryDb()
-            {
-                Name = "Review",
-                ColorObject = Colors.DarkSeaGreen,
-                CategoryGroup = Work,
+                CategoryGroup = Personal,
             },
         });
 

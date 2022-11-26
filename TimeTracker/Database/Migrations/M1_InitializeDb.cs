@@ -4,9 +4,9 @@ namespace TimeTracker.Migrations;
 
 public class M1_InitializeDb : IDbMigration
 {
-    public Task Do(SQLiteAsyncConnection db)
+    public async Task Do(SQLiteAsyncConnection db)
     {
-        return db.ExecuteAsync(@"create table main.TrackedTimeDb
+        await db.ExecuteAsync(@"create table if not exists main.TrackedTimeDb
         (
             Id          integer not null
         primary key autoincrement,
@@ -15,6 +15,14 @@ public class M1_InitializeDb : IDbMigration
             ElapsedTime bigint
             );
         ");
+
+        await db.ExecuteAsync(@"
+CREATE TABLE if not exists ControlDb (
+    ""Id"" integer primary key autoincrement not null ,
+    ""Value"" varchar )
+");
+
+        await db.InsertAsync(new ControlDb(ControlDb.ParamId.Version, 1));
     }
 
     public Task UnDo(SQLiteAsyncConnection db)

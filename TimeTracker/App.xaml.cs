@@ -86,6 +86,8 @@ public partial class App : Application
             var window = Windows.FirstOrDefault();
             if (window != null)
             {
+                // TODO: save current activity before close
+
                 _hook.Dispose();
 
                 Application.Current.CloseWindow(window);

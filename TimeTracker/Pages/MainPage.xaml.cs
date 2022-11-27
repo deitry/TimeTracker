@@ -113,7 +113,7 @@ public partial class MainPage : ContentPage
         Task.Run(async () =>
         {
             var db = await TrackerDatabase.Instance;
-            await db.InsertAsync(tracker.ToDb());
+            await db.Update(tracker);
         });
 
         // ShowAlert(tracker);

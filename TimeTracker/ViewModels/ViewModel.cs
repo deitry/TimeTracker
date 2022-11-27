@@ -20,11 +20,12 @@ internal sealed class ViewModel : INotifyPropertyChanged
     private readonly TimeSpan TimeLimit = TimeSpan.FromMinutes(30);
 
     public delegate void AlertHandler(TimeTracker timeTracker);
+
     public event AlertHandler? Alert;
 
     public ViewModel()
     {
-        _timer = new Timer(Tick, null, TimeSpan.Zero, Period);
+        _timer = new Timer(Tick, null, Timeout.Infinite, Timeout.Infinite);
 
         var context = SynchronizationContext.Current;
         Debug.Assert(context != null);
@@ -37,10 +38,21 @@ internal sealed class ViewModel : INotifyPropertyChanged
 
         foreach (var tracker in trackers)
         {
-            _trackers[tracker.Name] = tracker;
+            if (_trackers.ContainsKey(tracker.Name))
+            {
+                // force stop tracker
+                tracker.StatusEnum = TrackedTimeDb.TrackingStatus.Completed;
+                await db.Update(tracker);
+            }
+            else
+            {
+                _trackers[tracker.Name] = new TimeTracker(tracker);
+            }
         }
 
         Categories = await db.GetCategories();
+
+        _timer.Change(TimeSpan.Zero, Period);
     }
 
     public List<CategoryDb> Categories { get; set; }

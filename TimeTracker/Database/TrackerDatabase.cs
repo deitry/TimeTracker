@@ -119,21 +119,26 @@ public class TrackerDatabase
     }
 
     private readonly SemaphoreSlim _dbSemaphore = new SemaphoreSlim(1, 1);
-    public async Task Update(TimeTracker tracker)
+
+    public Task Update(TimeTracker tracker)
+    {
+        return Update(tracker.ToDb());
+    }
+
+    public async Task Update(TrackedTimeDb tracker)
     {
         await _dbSemaphore.WaitAsync();
 
         try
         {
-            var serialized = tracker.ToDb();
             if (tracker.Id == 0)
             {
-                await _database.InsertAsync(serialized);
-                tracker.Id = serialized.Id;
+                await _database.InsertAsync(tracker);
+                tracker.Id = tracker.Id;
             }
             else
             {
-                await _database.UpdateAsync(serialized);
+                await _database.UpdateAsync(tracker);
             }
         }
         finally
@@ -142,7 +147,7 @@ public class TrackerDatabase
         }
     }
 
-    public async Task<List<TimeTracker>> ListRunningTrackers()
+    public async Task<List<TrackedTimeDb>> ListRunningTrackers()
     {
         await _dbSemaphore.WaitAsync();
 
@@ -150,11 +155,10 @@ public class TrackerDatabase
         {
             var trackers = await _database.Table<TrackedTimeDb>()
                 .Where(t => t.Status == (int) TrackedTimeDb.TrackingStatus.Running)
+                .OrderByDescending(t => t.StartTime)
                 .ToListAsync();
 
-            return trackers
-                .Select(t => new TimeTracker(t))
-                .ToList();
+            return trackers;
         }
         finally
         {

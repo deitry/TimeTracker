@@ -5,10 +5,23 @@ namespace TimeTracker;
 
 public class CategoryDb : ITable
 {
+    public enum CategoryState
+    {
+        Enabled = 0,
+        Disabled = 1,
+    }
+
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
-    public bool Enabled { get; set; }
+    public int State { get; set; }
+
+    [Ignore]
+    public CategoryState StateEnum
+    {
+        get => (CategoryState) State;
+        set => State = (int) value;
+    }
 
     public string Name { get; set; }
 

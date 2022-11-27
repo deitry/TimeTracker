@@ -41,88 +41,80 @@ public class TrackerDatabase
 
     public Task<List<CategoryDb>> GetCategories()
     {
+        return _database.Table<CategoryDb>()
+            .ToListAsync();
+    }
+
+    private static Task<List<CategoryDb>> DefaultCategories()
+    {
         return Task.FromResult(new List<CategoryDb>()
         {
             new CategoryDb()
             {
                 Name = "Code",
-                Enabled = true,
                 ColorObject = Colors.DarkSlateBlue,
                 CategoryGroup = Work,
             },
             new CategoryDb()
             {
                 Name = "Tasks",
-                Enabled = true,
                 ColorObject = Colors.DarkCyan,
                 CategoryGroup = Work,
             },
             new CategoryDb()
             {
                 Name = "Call",
-                Enabled = true,
                 ColorObject = Colors.DarkGreen,
                 CategoryGroup = Work,
             },
             new CategoryDb()
             {
                 Name = "Review",
-                Enabled = true,
                 ColorObject = Colors.DarkSeaGreen,
                 CategoryGroup = Work,
             },
             new CategoryDb()
             {
                 Name = "Pet",
-                Enabled = true,
                 ColorObject = Colors.DarkKhaki,
                 CategoryGroup = Work,
             },
             new CategoryDb()
             {
                 Name = "Sport",
-                Enabled = true,
                 ColorObject = Colors.LightGray,
                 CategoryGroup = Personal,
             },
             new CategoryDb()
             {
                 Name = "Game",
-                Enabled = true,
                 ColorObject = Colors.DarkOrchid,
                 CategoryGroup = Personal,
             },
             new CategoryDb()
             {
                 Name = "Eat",
-                Enabled = true,
                 ColorObject = Colors.DarkViolet,
                 CategoryGroup = Personal,
             },
             new CategoryDb()
             {
                 Name = "Leisure",
-                Enabled = true,
                 ColorObject = Colors.DarkGoldenrod,
                 CategoryGroup = Personal,
             },
             new CategoryDb()
             {
                 Name = "Meditation",
-                Enabled = true,
                 ColorObject = Colors.DarkRed,
                 CategoryGroup = Personal,
             },
             new CategoryDb()
             {
                 Name = "Family",
-                Enabled = true,
                 ColorObject = Colors.DarkOliveGreen,
                 CategoryGroup = Personal,
             },
         });
-
-        // return _database.Table<CategoryDb>()
-        //     .ToListAsync();
     }
 }

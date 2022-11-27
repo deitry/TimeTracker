@@ -6,7 +6,7 @@ public class ControlDb : ITable
 {
     public enum ParamId
     {
-        Version,
+        Version = 1,
     }
 
     [PrimaryKey, AutoIncrement]
@@ -32,7 +32,7 @@ public class ControlDb : ITable
         set => Value = value.ToString() ?? string.Empty;
     }
 
-    public string Value { get; private set; } = string.Empty;
+    public string Value { get; set; } = string.Empty;
 
     public ControlDb() { }
 

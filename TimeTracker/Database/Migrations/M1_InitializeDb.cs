@@ -18,11 +18,11 @@ public class M1_InitializeDb : IDbMigration
 
         await db.ExecuteAsync(@"
 CREATE TABLE if not exists ControlDb (
-    ""Id"" integer primary key autoincrement not null ,
+    ""Id"" integer primary key not null ,
     ""Value"" varchar )
 ");
 
-        await db.InsertAsync(new ControlDb(ControlDb.ParamId.Version, 1));
+        await db.InsertOrReplaceAsync(new ControlDb(ControlDb.ParamId.Version, 1));
     }
 
     public Task UnDo(SQLiteAsyncConnection db)

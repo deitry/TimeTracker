@@ -15,7 +15,7 @@ public static class Migrator
     private static readonly List<IDbMigration> Migrations = new()
     {
         new M1_InitializeDb(),
-        // new M2_AddFields(),
+        new M2_AddFields(),
     };
 
     public static async Task Migrate(SQLiteAsyncConnection db)
@@ -24,7 +24,7 @@ public static class Migrator
         try
         {
             var versionParam = await db.FindAsync<ControlDb>(pk: (int)ControlDb.ParamId.Version);
-            version = versionParam.AsInt ?? 0;
+            version = versionParam?.AsInt ?? 0;
         }
         catch (SQLiteException)
         {
@@ -36,7 +36,7 @@ public static class Migrator
             var migration = Migrations[i];
 
             await migration.Do(db);
-            await db.UpdateAsync(new ControlDb(ControlDb.ParamId.Version, i));
+            await db.UpdateAsync(new ControlDb(ControlDb.ParamId.Version, i + 1));
         }
     }
 }

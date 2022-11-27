@@ -6,13 +6,14 @@ public class M2_AddFields : IDbMigration
 {
     public Task Do(SQLiteAsyncConnection db)
     {
-        return db.ExecuteAsync(@"create table main.CategoryDb
+        return db.ExecuteAsync(@"create table if not exists main.CategoryDb
         (
-            Id          integer not null
+            Id            integer not null
         primary key autoincrement,
-            Name        varchar,
-            Group       varchar,
-            Color       varchar
+            State         integer,
+            Name          varchar,
+            CategoryGroup varchar,
+            ColorString   varchar
             );
         ");
     }

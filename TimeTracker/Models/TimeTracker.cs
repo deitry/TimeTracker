@@ -10,10 +10,12 @@ public class TimeTracker
 
     public DateTime StartTime { get; set; }
 
-    public TimeSpan ElapsedTime => _sw.Elapsed;
-    public bool IsRunning => _sw.IsRunning;
+    public DateTime EndTime { get; set; }
+    public TimeSpan ElapsedTime => IsRunning
+        ? DateTime.Now - StartTime
+        : EndTime - StartTime;
 
-    private readonly Stopwatch _sw = new Stopwatch();
+    public bool IsRunning { get; set; }
 
     public TimeTracker(string name)
     {
@@ -21,16 +23,27 @@ public class TimeTracker
         StartTime = DateTime.Now;
     }
 
+    public TimeTracker(TrackedTimeDb tracker)
+    {
+        Id = tracker.Id;
+        Name = tracker.Name;
+        StartTime = tracker.StartTime;
+        IsRunning = tracker.StatusEnum == TrackedTimeDb.TrackingStatus.Running;
+        if (IsRunning == false)
+            EndTime = tracker.StartTime + tracker.ElapsedTime;
+    }
+
     public TimeTracker Start()
     {
-        _sw.Start();
+        IsRunning = true;
 
         return this;
     }
 
     public TimeTracker Stop()
     {
-        _sw.Stop();
+        IsRunning = false;
+        EndTime = DateTime.Now;
 
         return this;
     }

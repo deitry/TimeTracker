@@ -141,4 +141,25 @@ public class TrackerDatabase
             _dbSemaphore.Release();
         }
     }
+
+    public async Task<List<TimeTracker>> ListRunningTrackers()
+    {
+        await _dbSemaphore.WaitAsync();
+
+        try
+        {
+            var trackers = await _database.Table<TrackedTimeDb>()
+                .Where(t => t.Status == (int) TrackedTimeDb.TrackingStatus.Running)
+                .ToListAsync();
+
+            return trackers
+                .Select(t => new TimeTracker(t))
+                .ToList();
+        }
+        finally
+        {
+            _dbSemaphore.Release();
+        }
+
+    }
 }

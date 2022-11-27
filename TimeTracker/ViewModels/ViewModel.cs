@@ -24,10 +24,26 @@ internal sealed class ViewModel : INotifyPropertyChanged
 
     public ViewModel()
     {
-        _timer = new Timer(Tick, null, Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+        _timer = new Timer(Tick, null, TimeSpan.Zero, Period);
 
-        // load running trackers from DB
+        var context = SynchronizationContext.Current;
+        Debug.Assert(context != null);
     }
+
+    public async Task InitializeRunningTrackers()
+    {
+        var db = await TrackerDatabase.Instance;
+        var trackers = await db.ListRunningTrackers();
+
+        foreach (var tracker in trackers)
+        {
+            _trackers[tracker.Name] = tracker;
+        }
+
+        Categories = await db.GetCategories();
+    }
+
+    public List<CategoryDb> Categories { get; set; }
 
     public void Activate(bool tbIsToggled, string tbText)
     {
@@ -53,8 +69,8 @@ internal sealed class ViewModel : INotifyPropertyChanged
             this.Alert?.Invoke(timeTracker);
         }
 
-        if (!_trackers.Any())
-            _timer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+        // if (!_trackers.Any())
+        //     _timer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
 
         OnPropertyChanged(nameof(TimeElapsedString));
     }
@@ -81,7 +97,7 @@ internal sealed class ViewModel : INotifyPropertyChanged
 
         _trackers[tbText] = new TimeTracker(tbText).Start();
 
-        _timer.Change(TimeSpan.Zero, Period);
+        // _timer.Change(TimeSpan.Zero, Period);
     }
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
@@ -95,5 +111,10 @@ internal sealed class ViewModel : INotifyPropertyChanged
         field = value;
         OnPropertyChanged(propertyName);
         return true;
+    }
+
+    public bool GetTrackerState(CategoryDb category)
+    {
+        return _trackers.ContainsKey(category.Name);
     }
 }

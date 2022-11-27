@@ -44,8 +44,7 @@ public partial class MainPage : ContentPage
 
     private async Task InitializeLayout()
     {
-        var db = await TrackerDatabase.Instance;
-        var categories = await db.GetCategories();
+        await _viewModel.InitializeRunningTrackers();
 
         var labelTime = new Label();
 
@@ -54,16 +53,18 @@ public partial class MainPage : ContentPage
 
         MainLayout.Children.Add(labelTime);
 
-        foreach (var category in categories)
+        foreach (var category in _viewModel.Categories)
         {
-            var button = new ToggleButton()
+            var button = new ToggleButton
             {
                 Text = category.Name,
                 ToggledColor = category.ColorObject,
             };
 
-            button.Toggled += ToggleButton_OnToggled;
             MainLayout.Children.Add(button);
+
+            button.IsToggled = _viewModel.GetTrackerState(category);
+            button.Toggled += ToggleButton_OnToggled;
         }
 
         var custom = new ToggleButton()

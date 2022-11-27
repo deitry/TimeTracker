@@ -38,4 +38,9 @@ public class CategoryDb : ITable
         get => Color.Parse(ColorString);
         set => ColorString = value.ToArgbHex();
     }
+
+    public override string ToString()
+    {
+        return $"Category: {Name}";
+    }
 }

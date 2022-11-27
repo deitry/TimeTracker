@@ -117,4 +117,28 @@ public class TrackerDatabase
             },
         });
     }
+
+    private readonly SemaphoreSlim _dbSemaphore = new SemaphoreSlim(1, 1);
+    public async Task Update(TimeTracker tracker)
+    {
+        await _dbSemaphore.WaitAsync();
+
+        try
+        {
+            var serialized = tracker.ToDb();
+            if (tracker.Id == 0)
+            {
+                await _database.InsertAsync(serialized);
+                tracker.Id = serialized.Id;
+            }
+            else
+            {
+                await _database.UpdateAsync(serialized);
+            }
+        }
+        finally
+        {
+            _dbSemaphore.Release();
+        }
+    }
 }

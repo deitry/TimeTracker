@@ -29,6 +29,6 @@ public class TrackedTimeDb : ITable
         /// <summary>
         /// Currently running
         /// </summary>
-        Started = 1,
+        Running = 1,
     }
 }

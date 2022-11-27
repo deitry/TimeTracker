@@ -15,7 +15,7 @@ internal sealed class ViewModel : INotifyPropertyChanged
 
     private readonly Dictionary<string, TimeTracker> _trackers = new();
     private readonly Timer _timer;
-    private const double Period = 1;
+    private readonly TimeSpan Period = TimeSpan.FromSeconds(1);
 
     private readonly TimeSpan TimeLimit = TimeSpan.FromMinutes(30);
 
@@ -25,6 +25,8 @@ internal sealed class ViewModel : INotifyPropertyChanged
     public ViewModel()
     {
         _timer = new Timer(Tick, null, Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+
+        // load running trackers from DB
     }
 
     public void Activate(bool tbIsToggled, string tbText)
@@ -59,7 +61,16 @@ internal sealed class ViewModel : INotifyPropertyChanged
 
     public void Tick(object? obj)
     {
-        // update in db
+        // save to DB
+        Task.Run(async () =>
+        {
+            var db = await TrackerDatabase.Instance;
+            foreach (var tracker in _trackers.Values)
+            {
+                await db.Update(tracker);
+            }
+        });
+
         OnPropertyChanged(nameof(TimeElapsedString));
     }
 
@@ -70,7 +81,7 @@ internal sealed class ViewModel : INotifyPropertyChanged
 
         _trackers[tbText] = new TimeTracker(tbText).Start();
 
-        _timer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(Period));
+        _timer.Change(TimeSpan.Zero, Period);
     }
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)

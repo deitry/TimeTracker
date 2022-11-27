@@ -2,7 +2,7 @@
 
 namespace TimeTracker.Database.Migrations;
 
-public class M2_AddFields : IDbMigration
+public class M2_AddCategories : IDbMigration
 {
     public Task Do(SQLiteAsyncConnection db)
     {

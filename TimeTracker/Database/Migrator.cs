@@ -15,7 +15,8 @@ public static class Migrator
     private static readonly List<IDbMigration> Migrations = new()
     {
         new M1_InitializeDb(),
-        new M2_AddFields(),
+        new M2_AddCategories(),
+        new M3_AddStatuses(),
     };
 
     public static async Task Migrate(SQLiteAsyncConnection db)

@@ -59,6 +59,7 @@ internal sealed class ViewModel : INotifyPropertyChanged
 
     public void Tick(object? obj)
     {
+        // update in db
         OnPropertyChanged(nameof(TimeElapsedString));
     }
 

@@ -3,13 +3,13 @@ using System.ComponentModel;
 using System.Diagnostics;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Layouts;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Data;
 using Application = Microsoft.Maui.Controls.Application;
 using Binding = Microsoft.Maui.Controls.Binding;
-using Colors = Microsoft.UI.Colors;
 using Window = Microsoft.Maui.Controls.Window;
 #if WINDOWS
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Data;
+using Colors = Microsoft.UI.Colors;
 using Windows.Graphics;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;

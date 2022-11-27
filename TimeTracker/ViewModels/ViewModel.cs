@@ -8,9 +8,10 @@ namespace TimeTracker;
 internal sealed class ViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
+    public const string TimeSpanHmsFormat = @"hh\:mm\:ss";
 
     public TimeSpan? TimeElapsed => _trackers.FirstOrDefault().Value?.ElapsedTime;
-    public string TimeElapsedString => TimeElapsed?.ToString(@"hh\:mm\:ss") ?? "=";
+    public string TimeElapsedString => TimeElapsed?.ToString(TimeSpanHmsFormat) ?? "=";
 
     private readonly Dictionary<string, TimeTracker> _trackers = new();
     private readonly Timer _timer;

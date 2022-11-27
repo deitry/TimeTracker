@@ -44,7 +44,7 @@ public sealed class StatisticsViewModel : INotifyPropertyChanged
         var kvps = totalTime.ToList();
         kvps.Sort((first, second) => second.Value.CompareTo(first.Value));
 
-        return kvps.Select(t => $"{t.Key} : {t.Value}").ToList();
+        return kvps.Select(t => $"{t.Key} : {t.Value.ToString(ViewModel.TimeSpanHmsFormat)}").ToList();
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

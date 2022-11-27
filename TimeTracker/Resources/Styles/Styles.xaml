@@ -30,14 +30,21 @@
     </Style>
 
     <Style TargetType="Button">
+        <Setter Property="WidthRequest" Value="70" />
+        <Setter Property="HeightRequest" Value="30" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <!-- <Setter Property="BackgroundColor" Value="{StaticResource Gray600}" /> -->
         <Setter Property="TextColor"
-                Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Primary}}" />
+                Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Primary}}" />
         <Setter Property="BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+                Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray400}}" />
         <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="CornerRadius" Value="8" />
-        <Setter Property="Padding" Value="14,10" />
+        <!-- <Setter Property="Padding" Value="14,10" /> -->
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -166,8 +173,14 @@
     </Style>
 
     <Style TargetType="Label">
+        <Setter Property="WidthRequest" Value="70" />
+        <Setter Property="HeightRequest" Value="30" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
         <Setter Property="TextColor"
-                Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+                Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray500}}" />
         <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -456,9 +469,13 @@
         <Setter Property="TextColor"
                 Value="{AppThemeBinding Dark={StaticResource Gray200}, Light={StaticResource Gray950}}" />
 
+        <Setter Property="WidthRequest" Value="70" />
+        <Setter Property="HeightRequest" Value="30" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
         <Setter Property="TextTransform" Value="None" />
-        <Setter Property="Margin" Value="2" />
-        <Setter Property="Padding" Value="2" />
         <Setter Property="ToggledColor" Value="{StaticResource Gray200}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>

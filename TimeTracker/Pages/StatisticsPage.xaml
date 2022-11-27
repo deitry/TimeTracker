@@ -13,6 +13,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -25,6 +26,8 @@
 
             <Label Grid.Row="0" Grid.Column="1" Text="Today"/>
             <ListView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding DayStats}"/>
+
+            <Button Grid.Row="2" Grid.Column="1" Text="Close" Clicked="Button_OnClicked"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

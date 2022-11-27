@@ -10,36 +10,6 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-
-            <Style TargetType="local:ToggleButton">
-                <Setter Property="WidthRequest" Value="70" />
-                <Setter Property="HeightRequest" Value="30" />
-                <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="VerticalOptions" Value="Center" />
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="Padding" Value="0"/>
-            </Style>
-
-            <Style TargetType="Button">
-                <Setter Property="WidthRequest" Value="70" />
-                <Setter Property="HeightRequest" Value="30" />
-                <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="VerticalOptions" Value="Center" />
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="Padding" Value="0"/>
-                <Setter Property="BackgroundColor" Value="{StaticResource Gray600}" />
-                <Setter Property="TextColor" Value="{StaticResource Gray100}" />
-            </Style>
-
-            <Style TargetType="Label">
-                <Setter Property="WidthRequest" Value="70" />
-                <Setter Property="HeightRequest" Value="30" />
-                <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="HorizontalTextAlignment" Value="Center" />
-                <Setter Property="VerticalOptions" Value="Center" />
-                <Setter Property="VerticalTextAlignment" Value="Center" />
-                <Setter Property="TextColor" Value="{StaticResource Gray500}" />
-            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 

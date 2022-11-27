@@ -12,4 +12,9 @@ public partial class StatisticsPage : ContentPage
     {
         InitializeComponent();
     }
+
+    private void Button_OnClicked(object? sender, EventArgs e)
+    {
+        Application.Current?.CloseWindow(this.Window);
+    }
 }

@@ -26,15 +26,20 @@ public partial class MainPage : ContentPage
         InitializeComponent();
 
         var context = SynchronizationContext.Current;
-        Task.Run(async () =>
-        {
-            await context!;
-            await InitializeLayout();
-        });
 
         _viewModel = (BindingContext as ViewModel) !;
-        _viewModel.Alert += ViewModelOnAlert;
 
+        Task.Run(async () =>
+        {
+            await _viewModel.InitializeRunningTrackers();
+
+            await context!;
+            InitializeLayout();
+
+            _viewModel.StartTimer();
+        });
+
+        _viewModel.Alert += ViewModelOnAlert;
         this.PropertyChanged += (sender, e) =>
         {
             if (e.PropertyName == nameof(Title) && this.Window != null)
@@ -42,10 +47,8 @@ public partial class MainPage : ContentPage
         };
     }
 
-    private async Task InitializeLayout()
+    private void InitializeLayout()
     {
-        await _viewModel.InitializeRunningTrackers();
-
         var labelTime = new Label();
 
         labelTime.BindingContext = _viewModel;

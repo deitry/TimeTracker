@@ -36,6 +36,19 @@ internal sealed class ViewModel : INotifyPropertyChanged
         var db = await TrackerDatabase.Instance;
         var trackers = await db.ListRunningTrackers();
 
+        // var groups = trackers.GroupBy(t => t.StartTime);
+        //
+        // foreach (var group in groups)
+        // {
+        //     var grouped = group.ToList();
+        //     var sorted = grouped.OrderByDescending(t => t.ElapsedTime);
+        //
+        //     foreach (var tracker in sorted.Skip(1))
+        //     {
+        //         await db.Remove(tracker);
+        //     }
+        // }
+
         foreach (var tracker in trackers)
         {
             if (_trackers.ContainsKey(tracker.Name))
@@ -51,7 +64,10 @@ internal sealed class ViewModel : INotifyPropertyChanged
         }
 
         Categories = await db.GetCategories();
+    }
 
+    public void StartTimer()
+    {
         _timer.Change(TimeSpan.Zero, Period);
     }
 

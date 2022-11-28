@@ -26,9 +26,6 @@ internal sealed class ViewModel : INotifyPropertyChanged
     public ViewModel()
     {
         _timer = new Timer(Tick, null, Timeout.Infinite, Timeout.Infinite);
-
-        var context = SynchronizationContext.Current;
-        Debug.Assert(context != null);
     }
 
     public async Task InitializeRunningTrackers()

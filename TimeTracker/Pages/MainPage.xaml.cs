@@ -25,21 +25,22 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
 
-        var context = SynchronizationContext.Current;
-
         _viewModel = (BindingContext as ViewModel) !;
+
+        var context = SynchronizationContext.Current!;
 
         Task.Run(async () =>
         {
+            await context;
             await _viewModel.InitializeRunningTrackers();
 
-            await context!;
+            await context;
             InitializeLayout();
 
+            _viewModel.Alert += ViewModelOnAlert;
             _viewModel.StartTimer();
         });
 
-        _viewModel.Alert += ViewModelOnAlert;
         this.PropertyChanged += (sender, e) =>
         {
             if (e.PropertyName == nameof(Title) && this.Window != null)
@@ -91,6 +92,21 @@ public partial class MainPage : ContentPage
         {
             Text = "=",
         });
+
+#if WINDOWS
+        IntPtr nativeWindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(Window.Handler.PlatformView);
+        WindowId nativeWindowId  = Win32Interop.GetWindowIdFromWindow(nativeWindowHandle);
+        AppWindow appWindow = AppWindow.GetFromWindowId(nativeWindowId);
+
+        // appWindow.Resize(App.HorizontalDefault);
+        // appWindow.Resize(App.VerticalDefault);
+
+        var p = appWindow.Presenter as OverlappedPresenter;
+        Debug.Assert(p != null, nameof(p) + " != null");
+
+        p.SetBorderAndTitleBar(false, false);
+        p.IsAlwaysOnTop = true;
+#endif
     }
 
     protected override void OnAppearing()

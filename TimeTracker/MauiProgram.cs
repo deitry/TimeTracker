@@ -44,7 +44,7 @@ public static class MauiProgram
                     p.SetBorderAndTitleBar(false, false);
                     p.IsMaximizable = false;
                     p.IsMinimizable = false;
-                    p.IsAlwaysOnTop = true;
+                    // p.IsAlwaysOnTop = true;
                 });
             });
         });

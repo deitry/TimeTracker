@@ -42,6 +42,7 @@ public class TrackerDatabase
     public Task<List<CategoryDb>> GetCategories()
     {
         return _database.Table<CategoryDb>()
+            .Where(c => c.State == (int)CategoryDb.CategoryState.Enabled)
             .ToListAsync();
     }
 

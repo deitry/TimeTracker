@@ -30,6 +30,7 @@
             <ListView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding DayStats}"/>
             <ListView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding DayGroupStats}"/>
 
+            <ListView Grid.Row="3" Grid.Column="0" ItemsSource="{Binding WeekWorkStats}" Margin="30"/>
             <Button Grid.Row="3" Grid.Column="1" Text="Close" Clicked="Button_OnClicked"/>
         </Grid>
     </ContentPage.Content>

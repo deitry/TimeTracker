@@ -27,12 +27,15 @@ public class TrackerDatabase
         return this;
     }
 
-    public Task<List<TrackedTimeDb>> ListDay(DateTime day)
+    public Task<List<TrackedTimeDb>> ListDay(DateTime since)
     {
-        var fullDay = day + TimeSpan.FromDays(1);
+        return ListDateTimeRange(since, since + TimeSpan.FromDays(1));
+    }
 
+    public Task<List<TrackedTimeDb>> ListDateTimeRange(DateTime since, DateTime upTo)
+    {
         return _database.Table<TrackedTimeDb>()
-            .Where(t => t.StartTime >= day && t.StartTime < fullDay)
+            .Where(t => t.StartTime >= since && t.StartTime < upTo)
             .ToListAsync();
     }
 

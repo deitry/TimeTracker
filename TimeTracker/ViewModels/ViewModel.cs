@@ -100,15 +100,47 @@ internal sealed class ViewModel : INotifyPropertyChanged
         OnPropertyChanged(nameof(TimeElapsedString));
     }
 
-    public void Tick(object? obj)
+    private readonly object _ticker = new();
+    private bool _ticking = false;
+
+    private void Tick(object? obj)
     {
+        lock (_ticker)
+        {
+            // if we triggered before previous Tick ends, most likely we are in debug mode
+            if (_ticking)
+                return;
+
+            _ticking = true;
+        }
+
         // save to DB
         Task.Run(async () =>
         {
             var db = await TrackerDatabase.Instance;
-            foreach (var tracker in _trackers.Values)
+            foreach (var entry in _trackers.Keys)
             {
-                await db.Update(tracker);
+                var tracker = _trackers[entry];
+                if (tracker.StartTime.Date < DateTime.Today)
+                {
+                    tracker.Stop();
+
+                    // TODO: track multiple days as separate entries
+                    tracker.EndTime = DateTime.Today;
+                    await db.Update(tracker);
+
+                    _trackers[entry] = new TimeTracker(entry)
+                    {
+                        StartTime = DateTime.Today,
+                    }.Start();
+                }
+
+                await db.Update(_trackers[entry]);
+            }
+
+            lock (_ticker)
+            {
+                _ticking = false;
             }
         });
 

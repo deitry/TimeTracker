@@ -17,11 +17,19 @@ public sealed class StatisticsViewModel : INotifyPropertyChanged
     async Task Refresh()
     {
         var db = await TrackerDatabase.Instance;
-        DayStats = await DayEntries(db, DateTime.Today);
-        YesterdayStats = await DayEntries(db, DateTime.Today - TimeSpan.FromDays(1));
+        var today = DateTime.Today;
+        var yesterday = today - TimeSpan.FromDays(1);
+        DayStats = await DayEntries(db, today);
+        YesterdayStats = await DayEntries(db, yesterday);
+
+        DayGroupStats = await DayGroupEntries(db, today);
+        YesterdayGroupStats = await DayGroupEntries(db, yesterday);
 
         OnPropertyChanged(nameof(DayStats));
         OnPropertyChanged(nameof(YesterdayStats));
+
+        OnPropertyChanged(nameof(DayGroupStats));
+        OnPropertyChanged(nameof(YesterdayGroupStats));
     }
 
     private async Task<List<string>> DayEntries(TrackerDatabase db, DateTime day)
@@ -47,10 +55,44 @@ public sealed class StatisticsViewModel : INotifyPropertyChanged
         return kvps.Select(t => $"{t.Key} : {t.Value.ToString(ViewModel.TimeSpanHmsFormat)}").ToList();
     }
 
+    // TODO: combine with DayEntries
+    private async Task<List<string>> DayGroupEntries(TrackerDatabase db, DateTime day)
+    {
+        var enumerator = (await db.GetCategories()).Select(c => KeyValuePair.Create(c.Name, c.CategoryGroup));
+        var categoriesToGroupMap = new Dictionary<string, string>(enumerator);
+
+        var list = await db.ListDay(day);
+
+        if (_context != null)
+            await _context;
+
+        var totalTime = new Dictionary<string, TimeSpan>();
+
+        foreach (var entry in list)
+        {
+            categoriesToGroupMap.TryGetValue(entry.Name, out var group);
+            if (string.IsNullOrEmpty(group))
+                group = entry.Name;
+
+            if (!totalTime.ContainsKey(group))
+                totalTime.Add(group, default);
+
+            totalTime[group] += entry.ElapsedTime;
+        }
+
+        var kvps = totalTime.ToList();
+        kvps.Sort((first, second) => second.Value.CompareTo(first.Value));
+
+        return kvps.Select(t => $"{t.Key} : {t.Value.ToString(ViewModel.TimeSpanHmsFormat)}").ToList();
+    }
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public List<string> YesterdayStats { get; private set; } = new List<string>();
     public List<string> DayStats { get; private set; } = new List<string>();
+
+    public List<string> YesterdayGroupStats { get; private set; } = new List<string>();
+    public List<string> DayGroupStats { get; private set; } = new List<string>();
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {

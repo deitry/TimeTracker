@@ -4,9 +4,9 @@ namespace TimeTracker.Database.Migrations;
 
 public class M2_AddCategories : IDbMigration
 {
-    public Task Do(SQLiteAsyncConnection db)
+    public async Task Do(SQLiteAsyncConnection db)
     {
-        return db.ExecuteAsync(@"create table if not exists main.CategoryDb
+        await db.ExecuteAsync(@"create table if not exists main.CategoryDb
         (
             Id            integer not null
         primary key autoincrement,
@@ -16,6 +16,9 @@ public class M2_AddCategories : IDbMigration
             ColorString   varchar
             );
         ");
+
+        var categories = await TrackerDatabase.DefaultCategories();
+        db.InsertAllAsync(categories);
     }
 
     public Task UnDo(SQLiteAsyncConnection db)

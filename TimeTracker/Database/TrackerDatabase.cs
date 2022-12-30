@@ -49,7 +49,7 @@ public class TrackerDatabase
             .ToListAsync();
     }
 
-    private static Task<List<CategoryDb>> DefaultCategories()
+    internal static Task<List<CategoryDb>> DefaultCategories()
     {
         return Task.FromResult(new List<CategoryDb>()
         {
@@ -74,6 +74,12 @@ public class TrackerDatabase
             new CategoryDb()
             {
                 Name = "Review",
+                ColorObject = Colors.DarkSeaGreen,
+                CategoryGroup = Work,
+            },
+            new CategoryDb()
+            {
+                Name = "Triage",
                 ColorObject = Colors.DarkSeaGreen,
                 CategoryGroup = Work,
             },
@@ -109,7 +115,7 @@ public class TrackerDatabase
             },
             new CategoryDb()
             {
-                Name = "Meditation",
+                Name = "Art",
                 ColorObject = Colors.DarkRed,
                 CategoryGroup = Personal,
             },

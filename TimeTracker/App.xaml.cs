@@ -14,7 +14,7 @@ namespace TimeTracker;
 public partial class App : Application
 {
 #if WINDOWS
-    public const int ElementsInPanel = 16;
+    public const int ElementsInPanel = 17;
     public static readonly SizeInt32 HorizontalDefault = new SizeInt32(70 * ElementsInPanel, 50);
     public static readonly SizeInt32 VerticalDefault = new SizeInt32(85, 30 * ElementsInPanel + 15);
 #endif

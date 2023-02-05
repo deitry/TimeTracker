@@ -35,7 +35,14 @@ public static class MauiProgram
                     AppWindow appWindow = AppWindow.GetFromWindowId(nativeWindowId);
 
                     window.ExtendsContentIntoTitleBar = false;
-                    appWindow.Resize(App.HorizontalDefault);
+                    // var displayInfo = DeviceDisplay.MainDisplayInfo;
+
+                    var size = App.HorizontalDefault;
+                    // NOTE: displayInfo.Density is 0 here
+                    // size.Width = (int) (size.Width * displayInfo.Density);
+                    // size.Height = (int) (size.Height * displayInfo.Density);
+
+                    appWindow.Resize(size);
                     // appWindow.Resize(App.VerticalDefault);
 
                     var p = appWindow.Presenter as OverlappedPresenter;

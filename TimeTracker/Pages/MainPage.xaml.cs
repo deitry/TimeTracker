@@ -185,6 +185,8 @@ public partial class MainPage : ContentPage
 #if WINDOWS
         if (_dragging)
         {
+            var displayInfo = DeviceDisplay.MainDisplayInfo;
+
             var position = e.GetPosition(null);
             if (position.HasValue)
             {
@@ -193,7 +195,7 @@ public partial class MainPage : ContentPage
                 // make absolute position
                 var diff = position.Value - _relativePosition.Value;
 
-                var newPosition = new Point(diff.Width + Window.X, diff.Height + Window.Y);
+                var newPosition = new Point(diff.Width + Window.X * displayInfo.Density, diff.Height + Window.Y * displayInfo.Density);
 
                 var nativeWindow = Window.Handler.PlatformView;
                 IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(nativeWindow);
@@ -228,13 +230,22 @@ public partial class MainPage : ContentPage
         WindowId WindowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
         AppWindow appWindow = AppWindow.GetFromWindowId(WindowId);
 
+        var displayInfo = DeviceDisplay.MainDisplayInfo;
         if (Window.Height > Window.Width)
         {
-            appWindow.MoveAndResize(new RectInt32(950, 100, App.HorizontalDefault.Width, App.HorizontalDefault.Height));
+            appWindow.MoveAndResize(new RectInt32(
+                _X: 950,
+                _Y: 100,
+                _Width: (int)(App.HorizontalDefault.Width * displayInfo.Density),
+                _Height: (int)(App.HorizontalDefault.Height * displayInfo.Density)));
         }
         else
         {
-            appWindow.MoveAndResize(new RectInt32(1840, 260, App.VerticalDefault.Width, App.VerticalDefault.Height));
+            appWindow.MoveAndResize(new RectInt32(
+                _X: (int)(displayInfo.Width - 80 * displayInfo.Density),
+                _Y: (int)(385 * displayInfo.Density),
+                _Width: (int)(App.VerticalDefault.Width * displayInfo.Density),
+                _Height: (int)(App.VerticalDefault.Height * displayInfo.Density)));
         }
 #endif
     }

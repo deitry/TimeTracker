@@ -12,16 +12,15 @@ public class CategoryDb : ITable
         Disabled = 1,
     }
 
-    [PrimaryKey, AutoIncrement]
-    public int Id { get; set; }
+    [PrimaryKey, AutoIncrement, JsonIgnore] public int Id { get; set; }
 
     public int State { get; set; }
 
-    [Ignore]
+    [Ignore, JsonIgnore]
     public CategoryState StateEnum
     {
-        get => (CategoryState) State;
-        set => State = (int) value;
+        get => (CategoryState)State;
+        set => State = (int)value;
     }
 
     public string Name { get; set; }
@@ -33,16 +32,34 @@ public class CategoryDb : ITable
 
     public string ColorString { get; set; }
 
-    [Ignore]
-    [JsonIgnore]
+    [Ignore, JsonIgnore]
     public Color ColorObject
     {
         get => Color.Parse(ColorString);
-        set => ColorString = value.ToArgbHex();
+        init => ColorString = value.ToArgbHex();
     }
 
     public override string ToString()
     {
         return $"Category: {Name}";
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not CategoryDb other)
+            return false;
+
+        return Equals(other);
+    }
+
+    protected bool Equals(CategoryDb other)
+    {
+        // time trackers reference only category name, so we can compare only by name
+        return Name == other.Name;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Name, CategoryGroup, State, ColorString);
     }
 }

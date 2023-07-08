@@ -58,27 +58,27 @@ public class TrackerDatabase
 
     internal static Task<List<CategoryDb>> DefaultCategories()
     {
-        return Task.FromResult(new List<CategoryDb>()
+        return Task.FromResult(new List<CategoryDb>
         {
-            new CategoryDb()
+            new CategoryDb
             {
                 Name = "Code",
                 ColorObject = Colors.DarkSlateBlue,
                 CategoryGroup = Work,
             },
-            new CategoryDb()
+            new CategoryDb
             {
                 Name = "Tasks",
                 ColorObject = Colors.DarkCyan,
                 CategoryGroup = Work,
             },
-            new CategoryDb()
+            new CategoryDb
             {
                 Name = "Call",
                 ColorObject = Colors.DarkGreen,
                 CategoryGroup = Work,
             },
-            new CategoryDb()
+            new CategoryDb
             {
                 Name = "Review",
                 ColorObject = Colors.DarkSeaGreen,
@@ -90,43 +90,43 @@ public class TrackerDatabase
                 ColorObject = Colors.DarkSeaGreen,
                 CategoryGroup = Work,
             },
-            new CategoryDb()
+            new CategoryDb
             {
                 Name = "Pet",
                 ColorObject = Colors.DarkKhaki,
                 CategoryGroup = Work,
             },
-            new CategoryDb()
+            new CategoryDb
             {
                 Name = "Sport",
                 ColorObject = Colors.LightGray,
                 CategoryGroup = Personal,
             },
-            new CategoryDb()
+            new CategoryDb
             {
                 Name = "Game",
                 ColorObject = Colors.DarkOrchid,
                 CategoryGroup = Personal,
             },
-            new CategoryDb()
+            new CategoryDb
             {
                 Name = "Eat",
                 ColorObject = Colors.DarkViolet,
                 CategoryGroup = Personal,
             },
-            new CategoryDb()
+            new CategoryDb
             {
                 Name = "Leisure",
                 ColorObject = Colors.DarkGoldenrod,
                 CategoryGroup = Personal,
             },
-            new CategoryDb()
+            new CategoryDb
             {
                 Name = "Art",
                 ColorObject = Colors.DarkRed,
                 CategoryGroup = Personal,
             },
-            new CategoryDb()
+            new CategoryDb
             {
                 Name = "Family",
                 ColorObject = Colors.DarkOliveGreen,
@@ -168,6 +168,28 @@ public class TrackerDatabase
         }
     }
 
+    public async Task Update(CategoryDb category)
+    {
+        await _dbSemaphore.WaitAsync();
+
+        try
+        {
+            if (category.Id == 0)
+            {
+                await _database.InsertAsync(category);
+                category.Id = category.Id;
+            }
+            else
+            {
+                await _database.UpdateAsync(category);
+            }
+        }
+        finally
+        {
+            _dbSemaphore.Release();
+        }
+    }
+
     public async Task<List<TrackedTimeDb>> ListRunningTrackers()
     {
         await _dbSemaphore.WaitAsync();
@@ -188,13 +210,27 @@ public class TrackerDatabase
         }
     }
 
-    public async Task Remove(TrackedTimeDb tracker)
+    public async Task RemoveAsync(TrackedTimeDb tracker)
     {
         await _dbSemaphore.WaitAsync();
 
         try
         {
             await _database.DeleteAsync(tracker);
+        }
+        finally
+        {
+            _dbSemaphore.Release();
+        }
+    }
+
+    public async Task RemoveAsync(CategoryDb category)
+    {
+        await _dbSemaphore.WaitAsync();
+
+        try
+        {
+            await _database.DeleteAsync(category);
         }
         finally
         {

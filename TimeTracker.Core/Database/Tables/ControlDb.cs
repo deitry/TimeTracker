@@ -2,6 +2,9 @@
 
 namespace TimeTracker;
 
+/// <summary>
+/// Table to store control parameters.
+/// </summary>
 public class ControlDb : ITable
 {
     public enum ParamId

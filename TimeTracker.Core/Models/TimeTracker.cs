@@ -53,6 +53,7 @@ public class TimeTracker
         return new TrackedTimeDb
         {
             Id = Id,
+            Uuid = new Guid(),
             Name = Name,
             StartTime = StartTime,
             ElapsedTime = ElapsedTime,

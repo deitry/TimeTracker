@@ -2,10 +2,15 @@
 
 namespace TimeTracker;
 
+/// <summary>
+///
+/// </summary>
 public class TrackedTimeDb : ITable
 {
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
+
+    public Guid Uuid { get; set; }
 
     public string Name { get; set; }
 

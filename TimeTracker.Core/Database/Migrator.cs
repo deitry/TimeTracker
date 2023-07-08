@@ -17,6 +17,7 @@ public static class Migrator
         new M1_InitializeDb(),
         new M2_AddCategories(),
         new M3_AddStatuses(),
+        new M4_AddUuid(),
     };
 
     public static async Task Migrate(SQLiteAsyncConnection db)

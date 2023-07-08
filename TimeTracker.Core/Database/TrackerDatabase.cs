@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Microsoft.Maui.Graphics;
+using SQLite;
 
 namespace TimeTracker;
 

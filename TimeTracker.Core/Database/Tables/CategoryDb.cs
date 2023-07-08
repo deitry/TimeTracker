@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Graphics;
+﻿using System.Text.Json.Serialization;
+using Microsoft.Maui.Graphics;
 using SQLite;
 
 namespace TimeTracker;
@@ -33,6 +34,7 @@ public class CategoryDb : ITable
     public string ColorString { get; set; }
 
     [Ignore]
+    [JsonIgnore]
     public Color ColorObject
     {
         get => Color.Parse(ColorString);

@@ -6,16 +6,22 @@ namespace TimeTracker;
 public class TrackerDatabase
 {
     private readonly SQLiteAsyncConnection _database;
+    private static string _databaseName = Constants.DatabaseName;
 
-    private TrackerDatabase()
+    private TrackerDatabase(string databaseName)
     {
         var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        var path = Path.Combine(home, Constants.DatabasePath);
+        var path = Path.Combine(home, databaseName);
 
         _database = new SQLiteAsyncConnection(path, Constants.Flags);
     }
 
-    public static readonly AsyncLazy<TrackerDatabase> Instance = new(async () => await new TrackerDatabase().InitializeDb());
+    public static readonly AsyncLazy<TrackerDatabase> Instance = new(async () => await new TrackerDatabase(_databaseName).InitializeDb());
+
+    public static void InitializePath(string databaseName)
+    {
+        _databaseName = databaseName;
+    }
 
     public Task InsertAsync<T>(T result) where T : ITable, new()
     {

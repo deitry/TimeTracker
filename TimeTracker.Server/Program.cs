@@ -1,4 +1,8 @@
+using TimeTracker.Server;
+
 var builder = WebApplication.CreateBuilder(args);
+
+TimeTracker.TrackerDatabase.InitializePath(WebConstants.WebDatabaseName);
 
 // Add services to the container.
 

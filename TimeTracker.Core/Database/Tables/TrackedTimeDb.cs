@@ -16,9 +16,16 @@ public class TrackedTimeDb : ITable
 
     public DateTime StartTime { get; set; }
 
-    public TimeSpan ElapsedTime { get; init; }
+    public DateTime EndTime { get; set; }
+
+    [Ignore] public TimeSpan ElapsedTime => EndTime - StartTime;
 
     public int Status { get; set; }
+
+    /// <summary>
+    /// Last modification time - considering Start and Elapsed may ba changed later
+    /// </summary>
+    public DateTime Timestamp { get; set; }
 
     [Ignore]
     public TrackingStatus StatusEnum

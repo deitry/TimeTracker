@@ -18,6 +18,7 @@ public static class Migrator
         new M2_AddCategories(),
         new M3_AddStatuses(),
         new M4_AddUuid(),
+        new M005_AddTimestampAndReworkElapsed(),
     };
 
     public static async Task Migrate(SQLiteAsyncConnection db)
@@ -37,7 +38,15 @@ public static class Migrator
         {
             var migration = Migrations[i];
 
-            await migration.Do(db);
+            try
+            {
+                await migration.Do(db);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Migration {migration.GetType().Name} failed: {e}");
+                throw;
+            }
             await db.UpdateAsync(new ControlDb(ControlDb.ParamId.Version, i + 1));
         }
     }

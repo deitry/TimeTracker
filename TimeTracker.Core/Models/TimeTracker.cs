@@ -30,7 +30,7 @@ public class TimeTracker
         StartTime = tracker.StartTime;
         IsRunning = tracker.StatusEnum == TrackedTimeDb.TrackingStatus.Running;
         if (IsRunning == false)
-            EndTime = tracker.StartTime + tracker.ElapsedTime;
+            EndTime = tracker.EndTime;
     }
 
     public TimeTracker Start()
@@ -56,7 +56,7 @@ public class TimeTracker
             Uuid = new Guid(),
             Name = Name,
             StartTime = StartTime,
-            ElapsedTime = ElapsedTime,
+            EndTime = EndTime,
             StatusEnum = IsRunning
                 ? TrackedTimeDb.TrackingStatus.Running
                 : TrackedTimeDb.TrackingStatus.Completed,

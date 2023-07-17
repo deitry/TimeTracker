@@ -58,6 +58,8 @@ public partial class MainPage : ContentPage
 
         MainLayout.Children.Add(labelTime);
 
+        bool isAnyActive = false;
+
         foreach (var category in _viewModel.Categories)
         {
             var button = new ToggleButton
@@ -69,6 +71,7 @@ public partial class MainPage : ContentPage
             MainLayout.Children.Add(button);
 
             button.IsToggled = _viewModel.GetTrackerState(category);
+            isAnyActive |= button.IsToggled;
             button.Toggled += ToggleButton_OnToggled;
         }
 
@@ -88,6 +91,12 @@ public partial class MainPage : ContentPage
         };
         stats.Clicked += Settings_OnClicked;
         MainLayout.Children.Add(stats);
+
+        if (isAnyActive)
+        {
+            var toggled = MainLayout.Children.FirstOrDefault(v => v is ToggleButton { IsToggled: true }) as ToggleButton;
+            ChangeOtherCategoriesVisibility(toggled!, false);
+        }
 
         // MainLayout.Children.Add(new Label
         // {

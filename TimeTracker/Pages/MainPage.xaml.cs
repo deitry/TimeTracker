@@ -20,6 +20,7 @@ namespace TimeTracker;
 public partial class MainPage : ContentPage
 {
     private readonly ViewModel _viewModel;
+    private bool _collapsed = false;
 
     public MainPage()
     {
@@ -71,7 +72,7 @@ public partial class MainPage : ContentPage
             button.Toggled += ToggleButton_OnToggled;
         }
 
-        var custom = new ToggleButton()
+        var custom = new ToggleButton
         {
             Text = "Custom",
             // ToggledColor = Microsoft.Maui.Graphics.Colors.LightGray,
@@ -88,10 +89,10 @@ public partial class MainPage : ContentPage
         stats.Clicked += Settings_OnClicked;
         MainLayout.Children.Add(stats);
 
-        MainLayout.Children.Add(new Label()
-        {
-            Text = "=",
-        });
+        // MainLayout.Children.Add(new Label
+        // {
+        //     Text = "=",
+        // });
 
 #if WINDOWS
         IntPtr nativeWindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(Window.Handler.PlatformView);
@@ -173,7 +174,50 @@ public partial class MainPage : ContentPage
                 }
 
                 _viewModel.Activate(tb.IsToggled, taskName);
+
+                ChangeOtherCategoriesVisibility(tb, !tb.IsToggled);
             });
+        }
+    }
+
+    /// <summary>
+    /// Make other category toggles collapsed when one is toggled or visible when one is untoggled
+    /// </summary>
+    private void ChangeOtherCategoriesVisibility(ToggleButton tb, bool showAll)
+    {
+        foreach (var child in MainLayout.Children)
+        {
+            if (child is ToggleButton other
+                && other != tb
+                && (_viewModel.Categories.Any(c => c.Name == other.Text)
+                    || other.Text == "Custom"))
+            {
+                other.IsVisible = showAll;
+            }
+            // FIXME: this should hide only last one, but instead hides first one with the timer as well
+            // else if (child is Label { Text: "=", } label)
+            // {
+            //     label.IsVisible = showAll;
+            // }
+        }
+
+        // update window size
+        UpdateSize(collapsed: !showAll, invert: false);
+    }
+
+    private void UpdateSize(bool collapsed, bool invert)
+    {
+        if (collapsed == _collapsed && !invert)
+            return;
+
+        _collapsed = collapsed;
+        if (collapsed)
+        {
+            UpdateSize(App.HorizontalCollapsed, App.VerticalCollapsed, invert);
+        }
+        else
+        {
+            UpdateSize(App.HorizontalDefault, App.VerticalDefault, invert);
         }
     }
 
@@ -219,40 +263,68 @@ public partial class MainPage : ContentPage
 
     private void TapGestureRecognizer_OnTapped(object? sender, TappedEventArgs e)
     {
-        SwitchSize();
+#if WINDOWS
+        UpdateSize(_collapsed, invert: true);
+#endif
     }
 
-    private void SwitchSize()
-    {
 #if WINDOWS
+    private void UpdateSize(SizeInt32 horizontal, SizeInt32 vertical, bool invert)
+    {
+        var isVertical = Window.Height > Window.Width;
+        if (invert)
+            isVertical = !isVertical;
+
+        if (isVertical)
+        {
+            SetVerticalSize(vertical);
+        }
+        else
+        {
+            SetHorizontalSize(horizontal);
+        }
+    }
+
+    public (AppWindow window, DisplayInfo displayInfo) GetDisplayInfo()
+    {
         var nativeWindow = Window.Handler.PlatformView;
         IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(nativeWindow);
         WindowId WindowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
         AppWindow appWindow = AppWindow.GetFromWindowId(WindowId);
 
         var displayInfo = DeviceDisplay.MainDisplayInfo;
-        if (Window.Height > Window.Width)
-        {
-            appWindow.MoveAndResize(new RectInt32(
-                _X: 950,
-                _Y: 100,
-                _Width: (int)(App.HorizontalDefault.Width * displayInfo.Density),
-                _Height: (int)(App.HorizontalDefault.Height * displayInfo.Density)));
-        }
-        else
-        {
-            appWindow.MoveAndResize(new RectInt32(
-                _X: (int)(displayInfo.Width - 80 * displayInfo.Density),
-                _Y: (int)(385 * displayInfo.Density),
-                _Width: (int)(App.VerticalDefault.Width * displayInfo.Density),
-                _Height: (int)(App.VerticalDefault.Height * displayInfo.Density)));
-        }
-#endif
+
+        return (appWindow, displayInfo);
     }
+
+    private void SetVerticalSize(SizeInt32 size)
+    {
+        var (appWindow, displayInfo) = GetDisplayInfo();
+
+        appWindow.MoveAndResize(new RectInt32(
+            _X: (int)(displayInfo.Width - 80 * displayInfo.Density),
+            _Y: (int)(385 * displayInfo.Density),
+            _Width: (int)(size.Width * displayInfo.Density),
+            _Height: (int)(size.Height * displayInfo.Density)));
+    }
+
+    private void SetHorizontalSize(SizeInt32 size)
+    {
+        var (appWindow, displayInfo) = GetDisplayInfo();
+
+        appWindow.MoveAndResize(new RectInt32(
+            _X: 950,
+            _Y: 100,
+            _Width: (int)(size.Width * displayInfo.Density),
+            _Height: (int)(size.Height * displayInfo.Density)));
+    }
+#endif
 
     private void ClickGestureRecognizer_OnClicked(object? sender, EventArgs e)
     {
-        SwitchSize();
+#if WINDOWS
+        UpdateSize(App.HorizontalDefault, App.VerticalDefault, invert: true);
+#endif
     }
 
     private void Settings_OnClicked(object? sender, EventArgs e)

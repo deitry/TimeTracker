@@ -4,7 +4,7 @@ namespace TimeTracker;
 
 public static class Constants
 {
-    public const string DatabasePath = "tracker.db";
+    public const string DatabaseName = "tracker.db";
 
     public const SQLiteOpenFlags Flags =
         // open the database in read/write mode

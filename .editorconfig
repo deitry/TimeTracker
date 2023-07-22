@@ -1,0 +1,10 @@
+﻿root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 4
+
+[*.cs]
+wrap_before_binary_opsign = true
+wrap_chained_binary_expressions = chop_if_long
